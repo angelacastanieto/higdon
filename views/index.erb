@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <title>Export Plans</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class='container-fluid'>
+    <nav class="navbar navbar-dark bg-dark">
+      <span class="navbar-brand mb-0 h1">Export a Hal Higdon plan</span>
+    </nav>
+    <div class="row">
+      <div class="col-sm-4">
+        <div id="btn-container">
+          <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button class="btn btn-primary" id="novice-1-button">Novice 1</button>
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Export
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#fat">As CSV</a>
+                <a class="dropdown-item" href="#fat">As Google Calendar-importable CSV</a>
+                <a class="dropdown-item" href="#fat">Import directly to new Google Calendar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+          <div class="intrinsic-container intrinsic-container-16x9">
+            <div id="novice-1-iframe"><iframe height="1000px" src="http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program" allowfullscreen/></div>
+          </div>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function() {
+          $(".dropdown-toggle").dropdown();
+      });
+      $(function() {
+        $('#novice-1-button').on('click', function() {
+          console.log('running');
+          $('#novice-1-iframe').show();
+          // $.ajax({
+          //   url: '/events/' + event_id + '/add_flag?flag=contingent',
+          //   success: function() {
+          //     location.reload(true);
+          //   },
+          //   error: function() {
+          //     window.alert('Error adding contingent flag');
+          //   }
+          // });
+        });
+      });
+    </script>
+  </body>
+</html>
