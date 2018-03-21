@@ -12,7 +12,53 @@ LOCATION = ""
 DESCRIPTION = ""
 
 get '/' do
-  erb :index
+  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
+
+  rows = []
+
+  doc.xpath('//table/tbody/tr').each do |row|
+    tarray = []
+
+    row.xpath('td').each do |cell|
+      tarray << cell.text
+    end
+
+    rows << tarray
+  end
+
+  erb :index, :locals => {:rows => rows, :table_title => 'Marathon Novice 1'}
+end
+
+get '/novice-1/week' do
+  race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
+
+  rows = CSV.read("tmp/full-novice-1.csv")
+
+  num_training_days = (rows.count - 1) * 7 - 1 # subtract 1 for header, mult by num days in week, off by one for some reason
+
+  start_date = race_date - num_training_days
+
+  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
+
+  rows = []
+
+  training_date = start_date
+
+  doc.xpath('//table/tbody/tr').each do |row|
+    tarray = []
+
+    tarray << training_date.strftime("Starting %m/%d/%Y")
+
+    row.xpath('td').each do |cell|
+      tarray << cell.text
+    end
+
+    training_date += 7 unless tarray.empty? # if is empty, was header row so don't increment training_date
+
+    rows << tarray
+  end
+
+  erb :index, :locals => {:rows => rows, :table_title => 'Marathon Novice 1', :racedate => params['racedate']}
 end
 
 get '/novice-1/csv' do

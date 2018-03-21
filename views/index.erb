@@ -32,7 +32,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form id="novice1form" method="GET" action="novice-1-calendar/csv">
+            <form id="novice1form" method="GET" action="novice-1/week">
               <div class="form-group">
                 <input type="date" name="racedate" required>
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -52,12 +52,11 @@
             <button class="btn btn-primary" id="novice-1-button">Novice 1</button>
             <div class="btn-group" role="group">
               <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Export
+                View
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="novice-1/csv">As CSV</a>
-                <a class="dropdown-item" onclick="shownovice1modal()">As Google Calendar-importable CSV</a>
-                <a class="dropdown-item" href="#cal">Directly to new Google Calendar (coming soon)</a>
+                <a class="dropdown-item" href="novice-1/csv">Original Grid</a>
+                <a class="dropdown-item" onclick="shownovice1modal()">Grid with Week Starting Dates</a>
               </div>
             </div>
           </div>
@@ -71,9 +70,34 @@
         </div>
       </div>
       <div class="col-sm-8">
-          <div class="intrinsic-container intrinsic-container-16x9">
-            <div id="novice-1-iframe"><iframe height="1000px" src="http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program" allowfullscreen/></div>
+        <div class="card text-center" style="width: 75%;">
+          <h5 class="card-header"><%= table_title %></h5>
+          <div class="card-body">
+            <a href="novice-1/csv">Export as CSV</a>
+            <a href=<%= "novice-1-calendar/csv?racedate="+racedate %>>Export as Google calendar-importable CSV</a>
+            <table style="width:100%">
+              <tr>
+                <th>Week</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+              </tr>
+              <% for row in rows %>
+               <tr>
+                 <% for cell in row %>
+                   <td>
+                     <%= cell %>
+                  </td>
+                <% end %>
+              </tr>
+             <% end %>
+            </table>
           </div>
+        </div>
       </div>
     </div>
     <div class="row">
