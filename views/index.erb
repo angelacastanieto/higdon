@@ -3,45 +3,49 @@
   <head>
     <meta charset='UTF-8' />
     <title>Export Plans</title>
-    <script>
-      function shownovice1modal() {
-        $('#myModal').modal('show');
-        console.log('running')
-        // $('#novice-1-modal').modal('show');
-        // $('#novice-1-modal').modal('hide');
-      }
-    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <script>
+      $(function() {
+        $('#novice1form').submit(function() {
+          $('#myModal').modal('hide');
+          $('#novice1-google-cal-link').show();
+        });
+      });
+      function shownovice1modal() {
+        $('#myModal').modal('show');
+      }
+    </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body class='container-fluid'>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Enter the date of your race</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="novice1form" method="GET" action="novice-1-calendar/csv">
+              <div class="form-group">
+                <input type="date" name="racedate" required>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <nav class="navbar navbar-dark bg-dark">
       <span class="navbar-brand mb-0 h1">Export a Hal Higdon plan</span>
     </nav>
     <div class="row">
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="col-sm-4">
         <div id="btn-container">
           <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -53,9 +57,16 @@
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a class="dropdown-item" href="novice-1/csv">As CSV</a>
                 <a class="dropdown-item" onclick="shownovice1modal()">As Google Calendar-importable CSV</a>
-                <a class="dropdown-item" href="#fat">Directly to new Google Calendar</a>
+                <a class="dropdown-item" href="#cal">Directly to new Google Calendar (coming soon)</a>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <a style="display:none" id="novice1-google-cal-link" target="_blank" href="https://support.google.com/calendar/answer/37118?hl=en">
+              How to upload a CSV to a Google Calendar
+            </a>
           </div>
         </div>
       </div>
@@ -64,6 +75,9 @@
             <div id="novice-1-iframe"><iframe height="1000px" src="http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program" allowfullscreen/></div>
           </div>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12"
     </div>
   </body>
 </html>
