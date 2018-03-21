@@ -3,6 +3,14 @@
   <head>
     <meta charset='UTF-8' />
     <title>Export Plans</title>
+    <script>
+      function shownovice1modal() {
+        $('#myModal').modal('show');
+        console.log('running')
+        // $('#novice-1-modal').modal('show');
+        // $('#novice-1-modal').modal('hide');
+      }
+    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
@@ -14,6 +22,26 @@
       <span class="navbar-brand mb-0 h1">Export a Hal Higdon plan</span>
     </nav>
     <div class="row">
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-sm-4">
         <div id="btn-container">
           <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -23,9 +51,9 @@
                 Export
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#fat">As CSV</a>
-                <a class="dropdown-item" href="#fat">As Google Calendar-importable CSV</a>
-                <a class="dropdown-item" href="#fat">Import directly to new Google Calendar</a>
+                <a class="dropdown-item" href="novice-1/csv">As CSV</a>
+                <a class="dropdown-item" onclick="shownovice1modal()">As Google Calendar-importable CSV</a>
+                <a class="dropdown-item" href="#fat">Directly to new Google Calendar</a>
               </div>
             </div>
           </div>
@@ -37,25 +65,5 @@
           </div>
       </div>
     </div>
-    <script>
-      $(document).ready(function() {
-          $(".dropdown-toggle").dropdown();
-      });
-      $(function() {
-        $('#novice-1-button').on('click', function() {
-          console.log('running');
-          $('#novice-1-iframe').show();
-          // $.ajax({
-          //   url: '/events/' + event_id + '/add_flag?flag=contingent',
-          //   success: function() {
-          //     location.reload(true);
-          //   },
-          //   error: function() {
-          //     window.alert('Error adding contingent flag');
-          //   }
-          // });
-        });
-      });
-    </script>
   </body>
 </html>
