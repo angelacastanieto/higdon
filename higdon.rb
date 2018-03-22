@@ -2,6 +2,7 @@ require 'sinatra'
 require 'open-uri'
 require 'nokogiri'
 require 'csv'
+require './lib/helper'
 
 OUTPUT_HEADER = ["Subject", "Start Date", "All Day Event", "Start Time", "End Time", "Location", "Description"]
 WEEK_HEADER_0 = ["Week starting", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
@@ -55,42 +56,9 @@ end
 get '/novice-1/week' do
   race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
 
-  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
+  header, rows = Helper.get_table_data(race_date, 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program')
 
-  num_weeks = 0
-
-  doc.xpath('//table/tbody/tr').each_with_index do |row, i|
-    next if i == 0 # skip headers
-
-    num_weeks += 1
-  end
-
-  num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
-
-  start_date = race_date - num_training_days
-
-  rows = []
-
-  training_date = start_date
-
-  doc.xpath('//table/tbody/tr').each_with_index do |row, i|
-    next if i == 0 # skip header
-
-    tarray = []
-
-    tarray << training_date.strftime("%m/%d/%Y")
-
-    row.xpath('td').each_with_index do |cell, j|
-      next if j == 0 # skip week numberss
-      tarray << cell.text
-    end
-
-    training_date += 7 unless tarray.empty? # if is empty, was header row so don't increment training_date
-
-    rows << tarray
-  end
-
-  erb :index, :locals => {week_header: choose_week_header(start_date.wday), :rows => rows, :table_title => 'Marathon Novice 1', :racedate => params['racedate']}
+  erb :index, :locals => {week_header: header, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => params['racedate']}
 end
 
 get '/novice-1/week/csv' do
