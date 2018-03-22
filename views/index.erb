@@ -15,6 +15,10 @@
       function shownovice1modal() {
         $('#myModal').modal('show');
       }
+      function showgooglecallink() {
+        console.log('hi');
+        $('#googlecal-link').show();
+      }
     </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
@@ -63,21 +67,26 @@
         <div class="card text-center" style="width: 75%;">
           <h5 class="card-header"><%= table_title %></h5>
           <div class="card-body">
-            <a href="/novice-1/csv">Export as CSV</a>
-            <% if racedate != '' %>
-              <div class="row">
-                <div class="col-sm-12">
-                  <a href=<%="/novice-1-calendar/csv?racedate="+racedate%>>Export as Google calendar-importable CSV</a>
-                </div>
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Export
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="/novice-1/csv">Export as CSV</a>
+                <% if racedate != '' %>
+                <a class="dropdown-item" onclick="showgooglecallink()" href=<%="/novice-1-calendar/csv?racedate="+racedate%>>Export as Google calendar-importable CSV</a>
+                <% end %>
               </div>
-              <div class="row">
-                <div class="col-sm-12">
-                  <a id="novice1-google-cal-link" target="_blank" href="https://support.google.com/calendar/answer/37118?hl=en">
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div style="min-height:40px">
+                  <a id="googlecal-link" style="display:none" target="_blank" href="https://support.google.com/calendar/answer/37118?hl=en">
                     How to upload a CSV to a Google Calendar
                   </a>
                 </div>
               </div>
-            <% end %>
+            </div>
             <table style="width:100%">
               <tr>
                 <th>Week<% if racedate != '' %> starting<% end %></th>
