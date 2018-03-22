@@ -36,63 +36,42 @@ get '/' do
 end
 
 get '/novice-1' do
-  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
+  csv = params['csv']
 
-  rows = []
+  header, rows = Helper.get_table_data('http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program')
 
-  doc.xpath('//table/tbody/tr').each do |row|
-    tarray = []
-
-    row.xpath('td').each do |cell|
-      tarray << cell.text
+  if csv
+    csv_file = CSV.open("tmp/full-novice-1.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
+    csv_file << header
+    rows.each do |row|
+      csv_file << row
     end
+    csv_file.close
 
-    rows << tarray
+    send_file File.join('tmp/full-novice-1.csv'), :filename => 'marathon-novice-1', :type => 'Application/octet-stream'
   end
 
-  erb :index, :locals => {week_header: WEEK_HEADER, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => ''}
+  erb :index, :locals => {week_header: header, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => ''}
 end
 
 get '/week/full-novice-1' do
   race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
   csv = params['csv']
 
-  header, rows = Helper.get_table_data(race_date, 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program')
+  header, rows = Helper.get_table_data_by_racedate(race_date, 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program')
 
   if csv
-    csv = CSV.open("tmp/full-novice-1-week.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
-    csv << header
+    csv_file = CSV.open("tmp/full-novice-1-week.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
+    csv_file << header
     rows.each do |row|
-      csv << row
+      csv_file << row
     end
-    csv.close
+    csv_file.close
 
     return send_file File.join('tmp/full-novice-1-week.csv'), :filename => 'marathon-novice-1-week', :type => 'Application/octet-stream'
   end
 
   erb :index, :locals => {week_header: header, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => params['racedate']}
-end
-
-get '/novice-1/csv' do
-  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
-
-  csv = CSV.open("tmp/full-novice-1.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
-
-  doc.xpath('//table/tbody/tr').each do |row|
-    tarray = []
-    row.xpath('th').each do |cell|
-      tarray << cell.text
-    end
-
-    row.xpath('td').each do |cell|
-      tarray << cell.text
-    end
-    csv << tarray
-  end
-
-  csv.close
-
-  send_file File.join('tmp/full-novice-1.csv'), :filename => 'marathon-novice-1', :type => 'Application/octet-stream'
 end
 
 get '/novice-1-calendar/csv' do

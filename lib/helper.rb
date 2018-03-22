@@ -26,7 +26,25 @@ class Helper
     return WEEK_HEADER_6 if weekday_int == 6
   end
 
-  def self.get_table_data(race_date, url)
+  def self.get_table_data(url)
+    doc = Nokogiri::HTML(open(url))
+
+    rows = []
+
+    doc.xpath('//table/tbody/tr').each do |row|
+      tarray = []
+
+      row.xpath('td').each do |cell|
+        tarray << cell.text
+      end
+
+      rows << tarray
+    end
+
+    [WEEK_HEADER, rows]
+  end
+
+  def self.get_table_data_by_racedate(race_date, url)
     doc = Nokogiri::HTML(open(url))
 
     num_weeks = 0
