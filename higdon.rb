@@ -64,44 +64,13 @@ end
 get '/novice-1/week/csv' do
   race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
 
-  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
-
-  num_weeks = 0
-
-  doc.xpath('//table/tbody/tr').each_with_index do |row, i|
-    next if i == 0 # skip headers
-
-    num_weeks += 1
-  end
-
-  num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
-
-  start_date = race_date - num_training_days
-
-  rows = []
-
-  training_date = start_date
+  header, rows = Helper.get_table_data(race_date, 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program')
 
   csv = CSV.open("tmp/full-novice-1-week.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
 
-  csv << choose_week_header(start_date.wday)
+  csv << header
 
-  doc.xpath('//table/tbody/tr').each_with_index do |row, i|
-    next if i == 0 # skip header
-
-    tarray = []
-
-    tarray << training_date.strftime("%m/%d/%Y")
-
-    row.xpath('td').each_with_index do |cell, j|
-      next if j == 0 # skip week numberss
-      tarray << cell.text
-    end
-
-    training_date += 7 unless tarray.empty? # if is empty, was header row so don't increment training_date
-
-    csv << tarray
-  end
+  csv << rows
 
   csv.close
 
