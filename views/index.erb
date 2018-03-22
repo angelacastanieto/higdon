@@ -10,7 +10,6 @@
       $(function() {
         $('#novice1form').submit(function() {
           $('#myModal').modal('hide');
-          $('#novice1-google-cal-link').show();
         });
       });
       function shownovice1modal() {
@@ -32,7 +31,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form id="novice1form" method="GET" action="novice-1/week">
+            <form id="novice1form" method="GET" action="/novice-1/week">
               <div class="form-group">
                 <input type="date" name="racedate" required>
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -43,41 +42,45 @@
       </div>
     </div>
     <nav class="navbar navbar-dark bg-dark">
-      <span class="navbar-brand mb-0 h1">Export a Hal Higdon plan</span>
+      <span class="navbar-brand mb-0 h1"><a href="/novice-1">Export a Hal Higdon plan</a></span>
     </nav>
-    <div class="row">
-      <div class="col-sm-4">
-        <div id="btn-container">
-          <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <button class="btn btn-primary" id="novice-1-button">Novice 1</button>
-            <div class="btn-group" role="group">
-              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                View
-              </button>
-              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="novice-1/csv">Original Grid</a>
-                <a class="dropdown-item" onclick="shownovice1modal()">Grid with Week Starting Dates</a>
-              </div>
+    <div class="row"  style="margin-top:2%">
+      <div class="col-sm-5 text-center" >
+        <div  style="margin-top:5%" class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <button class="btn btn-primary" id="novice-1-button">Novice 1</button>
+          <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              View
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <a class="dropdown-item" href="/novice-1">Original Grid</a>
+              <a class="dropdown-item" onclick="shownovice1modal()">Grid for Race Date</a>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-12 text-center">
-            <a style="display:none" id="novice1-google-cal-link" target="_blank" href="https://support.google.com/calendar/answer/37118?hl=en">
-              How to upload a CSV to a Google Calendar
-            </a>
-          </div>
-        </div>
       </div>
-      <div class="col-sm-8">
+      <div class="col-sm-7">
         <div class="card text-center" style="width: 75%;">
           <h5 class="card-header"><%= table_title %></h5>
           <div class="card-body">
-            <a href="novice-1/csv">Export as CSV</a>
-            <a href=<%= "novice-1-calendar/csv?racedate="+racedate %>>Export as Google calendar-importable CSV</a>
+            <a href="/novice-1/csv">Export as CSV</a>
+            <% if racedate != '' %>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a href=<%="/novice-1-calendar/csv?racedate="+racedate%>>Export as Google calendar-importable CSV</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <a id="novice1-google-cal-link" target="_blank" href="https://support.google.com/calendar/answer/37118?hl=en">
+                    How to upload a CSV to a Google Calendar
+                  </a>
+                </div>
+              </div>
+            <% end %>
             <table style="width:100%">
               <tr>
-                <th>Week</th>
+                <th>Week<% if racedate != '' %> starting<% end %></th>
                 <th>Mon</th>
                 <th>Tue</th>
                 <th>Wed</th>

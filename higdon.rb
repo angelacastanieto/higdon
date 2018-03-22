@@ -11,7 +11,7 @@ END_TIME = ""
 LOCATION = ""
 DESCRIPTION = ""
 
-get '/' do
+get '/novice-1' do
   doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
 
   rows = []
@@ -26,7 +26,7 @@ get '/' do
     rows << tarray
   end
 
-  erb :index, :locals => {:rows => rows, :table_title => 'Marathon Novice 1'}
+  erb :index, :locals => {:rows => rows, :table_title => 'Marathon Novice 1', :racedate => ''}
 end
 
 get '/novice-1/week' do
@@ -47,7 +47,7 @@ get '/novice-1/week' do
   doc.xpath('//table/tbody/tr').each do |row|
     tarray = []
 
-    tarray << training_date.strftime("Starting %m/%d/%Y")
+    tarray << training_date.strftime("%m/%d/%Y")
 
     row.xpath('td').each do |cell|
       tarray << cell.text
