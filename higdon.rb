@@ -33,8 +33,6 @@ end
 get '/novice-1/week' do
   race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
 
-  rows = CSV.read("tmp/full-novice-1.csv")
-
   num_training_days = (rows.count - 1) * 7 - 1 # subtract 1 for header, mult by num days in week, off by one for some reason
 
   start_date = race_date - num_training_days
