@@ -4,13 +4,29 @@ require 'nokogiri'
 require 'csv'
 
 OUTPUT_HEADER = ["Subject", "Start Date", "All Day Event", "Start Time", "End Time", "Location", "Description"]
-WEEK_HEADER = ["Week starting", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
+WEEK_HEADER_0 = ["Week starting", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
+WEEK_HEADER_1 = ["Week starting", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
+WEEK_HEADER_2 = ["Week starting", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun", "Mon"]
+WEEK_HEADER_3 = ["Week starting", "Wed", "Thurs", "Fri", "Sat", "Sun", "Mon", "Tues"]
+WEEK_HEADER_4 = ["Week starting", "Thurs", "Fri", "Sat", "Sun", "Mon", "Tues", "Wed"]
+WEEK_HEADER_5 = ["Week starting", "Fri", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs"]
+WEEK_HEADER_6 = ["Week starting", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"]
 
 ALL_DAY_EVENT = true
 START_TIME = ""
 END_TIME = ""
 LOCATION = ""
 DESCRIPTION = ""
+
+def choose_week_header(weekday_int)
+  return WEEK_HEADER_0 if weekday_int == 0
+  return WEEK_HEADER_1 if weekday_int == 1
+  return WEEK_HEADER_2 if weekday_int == 2
+  return WEEK_HEADER_3 if weekday_int == 3
+  return WEEK_HEADER_4 if weekday_int == 4
+  return WEEK_HEADER_5 if weekday_int == 5
+  return WEEK_HEADER_6 if weekday_int == 6
+end
 
 get '/' do
   redirect "/novice-1"
@@ -31,7 +47,7 @@ get '/novice-1' do
     rows << tarray
   end
 
-  erb :index, :locals => {:rows => rows, :table_title => 'Marathon Novice 1', :racedate => ''}
+  erb :index, :locals => {week_header: WEEK_HEADER_1, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => ''}
 end
 
 get '/novice-1/week' do
@@ -72,7 +88,7 @@ get '/novice-1/week' do
     rows << tarray
   end
 
-  erb :index, :locals => {:rows => rows, :table_title => 'Marathon Novice 1', :racedate => params['racedate']}
+  erb :index, :locals => {week_header: choose_week_header(start_date.wday), :rows => rows, :table_title => 'Marathon Novice 1', :racedate => params['racedate']}
 end
 
 get '/novice-1/week/csv' do
@@ -98,7 +114,8 @@ get '/novice-1/week/csv' do
 
   csv = CSV.open("tmp/full-novice-1-week.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
 
-  csv << WEEK_HEADER
+  csv << choose_week_header(start_date.wday)
+
   doc.xpath('//table/tbody/tr').each_with_index do |row, i|
     next if i == 0 # skip header
 

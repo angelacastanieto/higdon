@@ -96,14 +96,11 @@
             </h5>
             <table style="width:100%">
               <tr>
-                <th>Week<% if racedate != '' %> starting<% end %></th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
+                <% for cell in week_header %>
+                  <th>
+                    <%= cell %>
+                 </th>
+               <% end %>
               </tr>
               <% for row in rows %>
                <tr>
@@ -115,7 +112,6 @@
               </tr>
              <% end %>
             </table>
-            <p style="margin-top:2%">NOTE: Hal Higdon's training programs assume a Sunday race date</p>
           </div>
         </div>
       </div>
