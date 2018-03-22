@@ -12,6 +12,8 @@ WEEK_HEADER_4 = ["Week starting", "Thurs", "Fri", "Sat", "Sun", "Mon", "Tues", "
 WEEK_HEADER_5 = ["Week starting", "Fri", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs"]
 WEEK_HEADER_6 = ["Week starting", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"]
 
+WEEK_HEADER = ["Week", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
+
 ALL_DAY_EVENT = true
 START_TIME = ""
 END_TIME = ""
@@ -47,7 +49,7 @@ get '/novice-1' do
     rows << tarray
   end
 
-  erb :index, :locals => {week_header: WEEK_HEADER_1, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => ''}
+  erb :index, :locals => {week_header: WEEK_HEADER, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => ''}
 end
 
 get '/novice-1/week' do
