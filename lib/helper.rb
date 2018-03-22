@@ -16,7 +16,7 @@ class Helper
   LOCATION = ""
   DESCRIPTION = ""
 
-  def choose_week_header(weekday_int)
+  def self.choose_week_header(weekday_int)
     return WEEK_HEADER_0 if weekday_int == 0
     return WEEK_HEADER_1 if weekday_int == 1
     return WEEK_HEADER_2 if weekday_int == 2
@@ -26,7 +26,7 @@ class Helper
     return WEEK_HEADER_6 if weekday_int == 6
   end
 
-  def get_table_data(race_date, url)
+  def self.get_table_data(race_date, url)
     doc = Nokogiri::HTML(open(url))
 
     num_weeks = 0

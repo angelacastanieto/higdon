@@ -53,28 +53,24 @@ get '/novice-1' do
   erb :index, :locals => {week_header: WEEK_HEADER, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => ''}
 end
 
-get '/novice-1/week' do
+get '/week/full-novice-1' do
   race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
+  csv = params['csv']
 
   header, rows = Helper.get_table_data(race_date, 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program')
+
+  if csv
+    csv = CSV.open("tmp/full-novice-1-week.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
+    csv << header
+    rows.each do |row|
+      csv << row
+    end
+    csv.close
+
+    return send_file File.join('tmp/full-novice-1-week.csv'), :filename => 'marathon-novice-1-week', :type => 'Application/octet-stream'
+  end
 
   erb :index, :locals => {week_header: header, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => params['racedate']}
-end
-
-get '/novice-1/week/csv' do
-  race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
-
-  header, rows = Helper.get_table_data(race_date, 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program')
-
-  csv = CSV.open("tmp/full-novice-1-week.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
-
-  csv << header
-
-  csv << rows
-
-  csv.close
-
-  send_file File.join('tmp/full-novice-1-week.csv'), :filename => 'marathon-novice-1-week', :type => 'Application/octet-stream'
 end
 
 get '/novice-1/csv' do

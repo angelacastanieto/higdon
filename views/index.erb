@@ -34,7 +34,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form id="novice1form" method="GET" action="/novice-1/week">
+            <form id="novice1form" method="GET" action="/week/full-novice-1">
               <div class="form-group">
                 <input type="date" name="racedate" required>
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -72,7 +72,7 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <% if racedate != '' %>
-                <a class="dropdown-item" href=<%="/novice-1/week/csv?racedate="+racedate%>>Export as CSV</a>
+                <a class="dropdown-item" href=<%="/week/full-novice-1?csv=true&racedate="+racedate%>>Export as CSV</a>
                 <a class="dropdown-item" onclick="showgooglecallink()" href=<%="/novice-1-calendar/csv?racedate="+racedate%>>Export as Google calendar-importable CSV</a>
                 <% else %>
                 <a class="dropdown-item" href="/novice-1/csv">Export as CSV</a>
