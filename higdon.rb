@@ -4,32 +4,8 @@ require 'nokogiri'
 require 'csv'
 require './lib/helper'
 
-OUTPUT_HEADER = ["Subject", "Start Date", "All Day Event", "Start Time", "End Time", "Location", "Description"]
-WEEK_HEADER_0 = ["Week starting", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
-WEEK_HEADER_1 = ["Week starting", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
-WEEK_HEADER_2 = ["Week starting", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun", "Mon"]
-WEEK_HEADER_3 = ["Week starting", "Wed", "Thurs", "Fri", "Sat", "Sun", "Mon", "Tues"]
-WEEK_HEADER_4 = ["Week starting", "Thurs", "Fri", "Sat", "Sun", "Mon", "Tues", "Wed"]
-WEEK_HEADER_5 = ["Week starting", "Fri", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs"]
-WEEK_HEADER_6 = ["Week starting", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"]
-
-WEEK_HEADER = ["Week", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
-
-ALL_DAY_EVENT = true
-START_TIME = ""
-END_TIME = ""
-LOCATION = ""
-DESCRIPTION = ""
-
-def choose_week_header(weekday_int)
-  return WEEK_HEADER_0 if weekday_int == 0
-  return WEEK_HEADER_1 if weekday_int == 1
-  return WEEK_HEADER_2 if weekday_int == 2
-  return WEEK_HEADER_3 if weekday_int == 3
-  return WEEK_HEADER_4 if weekday_int == 4
-  return WEEK_HEADER_5 if weekday_int == 5
-  return WEEK_HEADER_6 if weekday_int == 6
-end
+# TODO: should change all these to send binary directly instead of writing files
+# TODO: once start adding other training plans from hal, figure out best url struct
 
 get '/' do
   redirect "/novice-1"
@@ -78,7 +54,6 @@ get '/novice-1-calendar/csv' do
   race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
   filename = "full-novice-1-cal-#{race_date}"
 
-  # TODO: should change all these to send binary directly instead of writing files
   Helper.write_google_csv!(race_date, filename, 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program')
 
   send_file File.join("tmp/#{filename}.csv"), :filename => filename, :type => 'Application/octet-stream'
