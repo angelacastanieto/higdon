@@ -12,6 +12,10 @@ END_TIME = ""
 LOCATION = ""
 DESCRIPTION = ""
 
+get '/' do
+  redirect "/novice-1"
+end
+
 get '/novice-1' do
   doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
 
@@ -33,11 +37,19 @@ end
 get '/novice-1/week' do
   race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
 
-  num_training_days = (rows.count - 1) * 7 - 1 # subtract 1 for header, mult by num days in week, off by one for some reason
+  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
+
+  num_weeks = 0
+
+  doc.xpath('//table/tbody/tr').each_with_index do |row, i|
+    next if i == 0 # skip headers
+
+    num_weeks += 1
+  end
+
+  num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
 
   start_date = race_date - num_training_days
-
-  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
 
   rows = []
 
@@ -66,13 +78,19 @@ end
 get '/novice-1/week/csv' do
   race_date = Date.strptime(params['racedate'], '%Y-%m-%d')
 
-  rows = CSV.read("tmp/full-novice-1.csv")
+  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
 
-  num_training_days = (rows.count - 1) * 7 - 1 # subtract 1 for header, mult by num days in week, off by one for some reason
+  num_weeks = 0
+
+  doc.xpath('//table/tbody/tr').each_with_index do |row, i|
+    next if i == 0 # skip headers
+
+    num_weeks += 1
+  end
+
+  num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
 
   start_date = race_date - num_training_days
-
-  doc = Nokogiri::HTML(open("http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program"))
 
   rows = []
 
