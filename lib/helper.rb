@@ -1,14 +1,17 @@
 class Helper
-  OUTPUT_HEADER = ["Subject", "Start Date", "All Day Event", "Start Time", "End Time", "Location", "Description"]
-  WEEK_HEADER_0 = ["Week starting", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
-  WEEK_HEADER_1 = ["Week starting", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
-  WEEK_HEADER_2 = ["Week starting", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun", "Mon"]
-  WEEK_HEADER_3 = ["Week starting", "Wed", "Thurs", "Fri", "Sat", "Sun", "Mon", "Tues"]
-  WEEK_HEADER_4 = ["Week starting", "Thurs", "Fri", "Sat", "Sun", "Mon", "Tues", "Wed"]
-  WEEK_HEADER_5 = ["Week starting", "Fri", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs"]
-  WEEK_HEADER_6 = ["Week starting", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"]
+  GOOGLE_CAL_HEADER = ["Subject", "Start Date", "All Day Event", "Start Time", "End Time", "Location", "Description"]
 
   WEEK_HEADER = ["Week", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
+
+  WEEK_STARTING_HEADERS = {
+    0 => ["Week starting", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"],
+    1 => ["Week starting", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
+    2 => ["Week starting", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun", "Mon"],
+    3 => ["Week starting", "Wed", "Thurs", "Fri", "Sat", "Sun", "Mon", "Tues"],
+    4 => ["Week starting", "Thurs", "Fri", "Sat", "Sun", "Mon", "Tues", "Wed"],
+    5 => ["Week starting", "Fri", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs"],
+    6 => ["Week starting", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"]
+  }
 
   ALL_DAY_EVENT = true
   START_TIME = ""
@@ -17,13 +20,7 @@ class Helper
   DESCRIPTION = ""
 
   def self.choose_week_header(weekday_int)
-    return WEEK_HEADER_0 if weekday_int == 0
-    return WEEK_HEADER_1 if weekday_int == 1
-    return WEEK_HEADER_2 if weekday_int == 2
-    return WEEK_HEADER_3 if weekday_int == 3
-    return WEEK_HEADER_4 if weekday_int == 4
-    return WEEK_HEADER_5 if weekday_int == 5
-    return WEEK_HEADER_6 if weekday_int == 6
+    WEEK_STARTING_HEADERS[weekday_int]
   end
 
   def self.generate_table_csv(header, rows)
@@ -39,7 +36,7 @@ class Helper
     doc = Nokogiri::HTML(open(url))
 
     CSV.generate do |csv_string|
-      csv_string << OUTPUT_HEADER
+      csv_string << GOOGLE_CAL_HEADER
       training_date = get_start_date(race_date, doc)
 
       doc.xpath('//table/tbody/tr').each_with_index do |row, i|
