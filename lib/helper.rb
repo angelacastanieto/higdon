@@ -26,43 +26,31 @@ class Helper
     return WEEK_HEADER_6 if weekday_int == 6
   end
 
-  def self.write_google_csv!(race_date, filename, url)
+  def self.generate_google_cal_csv(race_date, url)
     doc = Nokogiri::HTML(open(url))
 
-    # TODO: shouldn't have to write to a -tmp file like this - just read from nokogiri obj directly
-    tmpcsv = CSV.open("tmp/#{filename}-tmp.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
+    num_weeks = 0
 
-    doc.xpath('//table/tbody/tr').each do |row|
-      tarray = []
-      row.xpath('th').each do |cell|
-        tarray << cell.text
-      end
+    doc.xpath('//table/tbody/tr').each_with_index do |row, i|
+      next if i == 0 # skip headers
 
-      row.xpath('td').each do |cell|
-        tarray << cell.text
-      end
-      tmpcsv << tarray
+      num_weeks += 1
     end
 
-    tmpcsv.close
-
-    finalcsv = CSV.open("tmp/#{filename}.csv", 'w',{:col_sep => ",", :quote_char => '\'', :force_quotes => true})
-
-    rows = CSV.read("tmp/#{filename}-tmp.csv")
-
-    num_training_days = (rows.count - 1) * 7 - 1 # subtract 1 for header, mult by num days in week, off by one for some reason
+    num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
 
     start_date = race_date - num_training_days
 
-    CSV.open("tmp/#{filename}.csv", "wb") do |csv|
-      csv << OUTPUT_HEADER
+    CSV.generate do |csv_string|
+      csv_string << OUTPUT_HEADER
       training_date = start_date
-      rows.each_with_index do |row, i|
-        next if i == 0 # header row
 
-        row.each_with_index do |task, k|
-          next if k == 0 # skip first column which has week numbers
-          csv << [task, training_date, ALL_DAY_EVENT, START_TIME, END_TIME, LOCATION, DESCRIPTION]
+      doc.xpath('//table/tbody/tr').each_with_index do |row, i|
+        next if i == 0 # skip headers
+
+        row.xpath('td').each_with_index do |cell, j|
+          next if j == 0 # skip first column which has week numbers
+          csv_string << [cell, training_date, ALL_DAY_EVENT, START_TIME, END_TIME, LOCATION, DESCRIPTION]
           training_date += 1
         end
       end
