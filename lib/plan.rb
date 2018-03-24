@@ -16,7 +16,8 @@ class Plan
   DEFAULT_PLAN = 'full-novice-1'
 
   PLAN_URLS = {
-    'full-novice-1' => 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program'
+    'full-novice-1' => 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program',
+    'full-novice-2' => 'http://www.halhigdon.com/training/51138/Marathon-Novice-2-Training-Program'
   }
 
   ALL_DAY_EVENT = true
@@ -45,6 +46,10 @@ class Plan
 
   def rows
     @rows
+  end
+
+  def plan_name
+    @plan_name
   end
 
   def plan_url(plan = DEFAULT_PLAN)

@@ -16,7 +16,13 @@ get '/:plan' do
 
   plan = Plan.new(plan_name, racedate, calendar)
 
-  return erb :index, :locals => {week_header: plan.header, :rows => plan.rows, :table_title => plan.table_title, :racedate => params['racedate'] || ''} unless csv
+  return erb :index, :locals => {
+    :week_header => plan.header,
+    :rows => plan.rows,
+    :table_title => plan.table_title,
+    :racedate => params['racedate'] || '',
+    :plan => plan.plan_name
+  } unless csv
 
   headers "Content-Disposition" => "attachment;#{plan.filename}.csv", "Content-Type" => "application/octet-stream"
 
