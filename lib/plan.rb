@@ -29,9 +29,10 @@ class Plan
     'full-novice-1' => 'Full Novice 1'
   }
 
-  def initialize(plan_name, racedate)
+  def initialize(plan_name, racedate, calendar)
     @plan_name = plan_name
     @racedate = racedate
+    @calendar = calendar
 
     header, rows = get_table_data(racedate, plan_name)
     @header = header
@@ -105,6 +106,17 @@ class Plan
 
   def table_title
     TABLE_TITLES[@plan_name]
+  end
+
+  def filename
+    return "#{@plan_name}-cal-#{@racedate}" if @racedate && @calendar
+    return "#{@plan_name}-#{@racedate}" if @racedate
+    @plan_name
+  end
+
+  def generate_csv
+    return generate_table_csv unless @calendar
+    generate_google_cal_csv
   end
 
   def generate_table_csv
