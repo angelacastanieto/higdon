@@ -3,6 +3,7 @@ require 'open-uri'
 require 'nokogiri'
 require 'csv'
 require './lib/helper'
+require './lib/presenter'
 
 get '/' do
   redirect '/full-novice-1'
@@ -15,7 +16,7 @@ get '/:plan' do
 
   header, rows = Helper.get_table_data(racedate, plan)
 
-  return erb :index, :locals => {week_header: header, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => params['racedate'] || ''} unless csv
+  return erb :index, :locals => {week_header: header, :rows => rows, :table_title => Presenter.table_title(plan), :racedate => params['racedate'] || ''} unless csv
 
   headers "Content-Disposition" => "attachment;full-novice-1.csv", "Content-Type" => "application/octet-stream"
 

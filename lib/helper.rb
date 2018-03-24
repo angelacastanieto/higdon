@@ -25,6 +25,10 @@ class Helper
   LOCATION = ""
   DESCRIPTION = ""
 
+  TABLE_TITLES = {
+    
+  }
+
   def self.plan_url(plan = DEFAULT_PLAN)
     PLAN_URLS[plan]
   end
