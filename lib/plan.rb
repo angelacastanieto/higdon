@@ -19,6 +19,50 @@ class Plan
     'full-novice-1' => {
       'url' => 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program',
       'table_title' => 'Full Novice 1'
+    },
+    'full-novice-2' => {
+      'url' => 'http://www.halhigdon.com/training/51138/Marathon-Novice-2-Training-Program',
+      'table_title' => 'Full Novice 2'
+    },
+    'full-intermediate-1' => {
+      'url' => 'http://www.halhigdon.com/training/51139/Marathon-Intermediate-1-Training-Program',
+      'table_title' => 'Full Intermediate 1'
+    },
+    'full-intermediate-2' => {
+      'url' => 'http://www.halhigdon.com/training/51140/Marathon-Intermediate-2-Training-Program',
+      'table_title' => 'Full Intermediate 2'
+    },
+    'full-advanced-1' => {
+      'url' => 'http://www.halhigdon.com/training/51141/Marathon-Advanced-1-Training-Program',
+      'table_title' => 'Full Advanced 1'
+    },
+    'full-advanced-2' => {
+      'url' => 'http://www.halhigdon.com/training/51142/Marathon-Advanced-2-Training-Program',
+      'table_title' => 'Full Advanced 2'
+    },
+    'full-personalbest' => {
+      'url' => 'http://www.halhigdon.com/training/51150/Marathon-Personal-Best-Training-Program',
+      'table_title' => 'Full Personal Best'
+    },
+    'full-marathon-3' => {
+      'url' => 'http://www.halhigdon.com/training/51151/Marathon-Marathon-3-Training-Program',
+      'table_title' => 'Full Marathon 3'
+    },
+    'full-senior' => {
+      'url' => 'http://www.halhigdon.com/training/51231/Marathon-Senior-Training-Program',
+      'table_title' => 'Full Senior'
+    },
+    'full-ultra-50' => {
+      'url' => 'http://halhigdon.com/training/67146/Ultramarathon-50-K',
+      'table_title' => 'Full Ultra 50K'
+    },
+    'full-boston' => {
+      'url' => 'http://halhigdon.com/training/51230/Marathon-Boston-Bound-Training-Program',
+      'table_title' => 'Full Boston Bound'
+    },
+    'full-dopey' => {
+      'url' => 'http://www.halhigdon.com/writing/57107/Dopey%20Challenge%20Training%20Guide',
+      'table_title' => 'Full Dopey Challenge'
     }
   }
 
