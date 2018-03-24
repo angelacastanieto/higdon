@@ -12,9 +12,11 @@
           $('#racedate-modal').modal('hide');
         });
       });
+
       function showRacedateModal() {
         $('#racedate-modal').modal('show');
       }
+
       function showgooglecallink() {
         $('#googlecal-link').show();
       }
@@ -49,18 +51,20 @@
     </nav>
     <div class="row"  style="margin-top:2%">
       <div class="col-sm-5 text-center" >
-        <div  style="margin-top:5%" class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <button class="btn btn-primary" id="novice-1-button">Novice 1</button>
-          <div class="btn-group" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              View
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <a class="dropdown-item" href="/full-novice-1">Original Grid</a>
-              <a class="dropdown-item" onclick="showRacedateModal()">Grid for Race Date</a>
+        <% plan_titles.each do |plan_name, plan_title| %>
+          <div  style="margin-top:5%" class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <a class="btn btn-primary" href=<%="/"+plan_name%>><%= plan_title%></a>
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                View
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href=<%="/"+plan_name%>>Original Grid</a>
+                <a class="dropdown-item" onclick="showRacedateModal()">Grid for Race Date</a>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
       </div>
       <div class="col-sm-7">
         <div class="card text-center" style="width: 75%;">
@@ -75,7 +79,7 @@
                 <a class="dropdown-item" href=<%="/"+plan+"?csv=true&racedate="+racedate%>>Export as CSV</a>
                 <a class="dropdown-item" onclick="showgooglecallink()" href=<%="/"+plan+"?csv=true&calendar=true&racedate="+racedate%>>Export as Google calendar-importable CSV</a>
                 <% else %>
-                <a class="dropdown-item" href="/"+plan+"?csv=true">Export as CSV</a>
+                <a class="dropdown-item" href=<%="/"+plan+"?csv=true"%>>Export as CSV</a>
                 <% end %>
               </div>
             </div>

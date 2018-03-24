@@ -21,7 +21,8 @@ get '/:plan' do
     :rows => plan.rows,
     :table_title => plan.table_title,
     :racedate => params['racedate'] || '',
-    :plan => plan.plan_name
+    :plan => plan.plan_name,
+    :plan_titles => Plan::TABLE_TITLES
   } unless csv
 
   headers "Content-Disposition" => "attachment;#{plan.filename}.csv", "Content-Type" => "application/octet-stream"
