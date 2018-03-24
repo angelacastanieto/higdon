@@ -1,4 +1,4 @@
-class Helper
+class Plan
   GOOGLE_CAL_HEADER = ["Subject", "Start Date", "All Day Event", "Start Time", "End Time", "Location", "Description"]
 
   WEEK_HEADER = ["Week", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
@@ -26,50 +26,37 @@ class Helper
   DESCRIPTION = ""
 
   TABLE_TITLES = {
-    
+    'full-novice-1' => 'Full Novice 1'
   }
 
-  def self.plan_url(plan = DEFAULT_PLAN)
+  def initialize(plan_name, racedate)
+    @plan_name = plan_name
+    @racedate = racedate
+
+    header, rows = get_table_data(racedate, plan_name)
+    @header = header
+    @rows = rows
+  end
+
+  def header
+    @header
+  end
+
+  def rows
+    @rows
+  end
+
+  def plan_url(plan = DEFAULT_PLAN)
     PLAN_URLS[plan]
   end
 
-  def self.generate_table_csv(header, rows)
-    CSV.generate do |csv_string|
-      csv_string << header
-      rows.each do |row|
-        csv_string << row
-      end
-    end
-  end
-
-  def self.generate_google_cal_csv(racedate, plan)
-    url = plan_url(plan)
-
-    doc = Nokogiri::HTML(open(url))
-
-    CSV.generate do |csv_string|
-      csv_string << GOOGLE_CAL_HEADER
-      training_date = get_start_date(racedate, doc)
-
-      doc.xpath('//table/tbody/tr').each_with_index do |row, i|
-        next if i == 0 # skip headers
-
-        row.xpath('td').each_with_index do |cell, j|
-          next if j == 0 # skip first column which has week numbers
-          csv_string << [cell, training_date, ALL_DAY_EVENT, START_TIME, END_TIME, LOCATION, DESCRIPTION]
-          training_date += 1
-        end
-      end
-    end
-  end
-
-  def self.get_table_data(racedate, plan)
+  def get_table_data(racedate, plan)
     url = plan_url(plan)
     return get_table_data_by_racedate(racedate, url) if racedate
     get_original_table_data(url)
   end
 
-  def self.get_original_table_data(url)
+  def get_original_table_data(url)
     doc = Nokogiri::HTML(open(url))
 
     rows = []
@@ -87,7 +74,7 @@ class Helper
     [WEEK_HEADER, rows]
   end
 
-  def self.get_table_data_by_racedate(racedate, url)
+  def get_table_data_by_racedate(racedate, url)
     doc = Nokogiri::HTML(open(url))
 
     rows = []
@@ -116,13 +103,47 @@ class Helper
     [choose_week_header(start_date.wday), rows]
   end
 
+  def table_title
+    TABLE_TITLES[@plan_name]
+  end
+
+  def generate_table_csv
+    CSV.generate do |csv_string|
+      csv_string << @header
+      @rows.each do |row|
+        csv_string << row
+      end
+    end
+  end
+
+  def self.generate_google_cal_csv(racedate, plan)
+    url = plan_url(plan)
+
+    doc = Nokogiri::HTML(open(url))
+
+    CSV.generate do |csv_string|
+      csv_string << GOOGLE_CAL_HEADER
+      training_date = get_start_date(racedate, doc)
+
+      doc.xpath('//table/tbody/tr').each_with_index do |row, i|
+        next if i == 0 # skip headers
+
+        row.xpath('td').each_with_index do |cell, j|
+          next if j == 0 # skip first column which has week numbers
+          csv_string << [cell, training_date, ALL_DAY_EVENT, START_TIME, END_TIME, LOCATION, DESCRIPTION]
+          training_date += 1
+        end
+      end
+    end
+  end
+
   private
 
-  def self.choose_week_header(weekday_int)
+  def choose_week_header(weekday_int)
     WEEK_STARTING_HEADERS[weekday_int]
   end
 
-  def self.get_start_date(racedate, doc)
+  def get_start_date(racedate, doc)
     num_weeks = 0
 
     doc.xpath('//table/tbody/tr').each_with_index do |row, i|
