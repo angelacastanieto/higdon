@@ -63,6 +63,34 @@ class Plan
     'full-dopey' => {
       'url' => 'http://www.halhigdon.com/writing/57107/Dopey%20Challenge%20Training%20Guide',
       'table_title' => 'Full Dopey Challenge'
+    },
+    'half-novice-1' => {
+      'url' => 'http://www.halhigdon.com/training/51131/Half-Marathon-Novice-1-Training-Program',
+      'table_title' => 'Half Novice 1'
+    },
+    'half-novice-2' => {
+      'url' => 'http://www.halhigdon.com/training/51312/Half-Marathon-Novice-2-Training-Program',
+      'table_title' => 'Half Novice 2'
+    },
+    'half-interm-1' => {
+      'url' => 'http://www.halhigdon.com/training/64474/Half-Marathon-Walk-Training-Program-Intermediate-1',
+      'table_title' => 'Half Intermediate 1'
+    },
+    'half-interm-2' => {
+      'url' => 'http://www.halhigdon.com/training/64471/Half-Marathon-Walk-Training-Program-Intermediate-2',
+      'table_title' => 'Half Intermediate 2'
+    },
+    'half-advanced' => {
+      'url' => 'http://www.halhigdon.com/training/51133/Half-Marathon-Advanced-Training-Program ',
+      'table_title' => 'Half Advanced'
+    },
+    'half-hm3' => {
+      'url' => 'http://www.halhigdon.com/training/64492/Half-Marathon-Walk-Training-Program-HM3',
+      'table_title' => 'Half HM3'
+    },
+    'half-walk' => {
+      'url' => 'http://www.halhigdon.com/training/51134/Half-Marathon-Walk-Training-Program',
+      'table_title' => 'Half Walk'
     }
   }
 
