@@ -23,10 +23,12 @@ get '/:plan' do
 end
 
 get '/:plan/calendar_csv' do
-  plan = params['plan']
+  plan_name = params['plan']
   racedate = Date.strptime(params['racedate'], '%Y-%m-%d')
+
+  plan = Plan.new(plan_name, racedate)
 
   headers "Content-Disposition" => "attachment;full-novice-1-cal-#{racedate}.csv", "Content-Type" => "application/octet-stream"
 
-  Helper.generate_google_cal_csv(racedate, plan)
+  plan.generate_google_cal_csv
 end

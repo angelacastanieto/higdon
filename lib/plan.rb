@@ -116,14 +116,14 @@ class Plan
     end
   end
 
-  def self.generate_google_cal_csv(racedate, plan)
-    url = plan_url(plan)
+  def generate_google_cal_csv
+    url = plan_url(@plan_name)
 
     doc = Nokogiri::HTML(open(url))
 
     CSV.generate do |csv_string|
       csv_string << GOOGLE_CAL_HEADER
-      training_date = get_start_date(racedate, doc)
+      training_date = get_start_date(@racedate, doc)
 
       doc.xpath('//table/tbody/tr').each_with_index do |row, i|
         next if i == 0 # skip headers
