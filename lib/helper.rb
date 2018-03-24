@@ -29,21 +29,9 @@ class Helper
   def self.generate_google_cal_csv(race_date, url)
     doc = Nokogiri::HTML(open(url))
 
-    num_weeks = 0
-
-    doc.xpath('//table/tbody/tr').each_with_index do |row, i|
-      next if i == 0 # skip headers
-
-      num_weeks += 1
-    end
-
-    num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
-
-    start_date = race_date - num_training_days
-
     CSV.generate do |csv_string|
       csv_string << OUTPUT_HEADER
-      training_date = start_date
+      training_date = get_start_date(race_date, doc)
 
       doc.xpath('//table/tbody/tr').each_with_index do |row, i|
         next if i == 0 # skip headers
@@ -78,19 +66,9 @@ class Helper
   def self.get_table_data_by_racedate(race_date, url)
     doc = Nokogiri::HTML(open(url))
 
-    num_weeks = 0
-
-    doc.xpath('//table/tbody/tr').each_with_index do |row, i|
-      next if i == 0 # skip headers
-
-      num_weeks += 1
-    end
-
-    num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
-
-    start_date = race_date - num_training_days
-
     rows = []
+
+    start_date = get_start_date(race_date, doc)
 
     training_date = start_date
 
@@ -112,5 +90,21 @@ class Helper
     end
 
     [choose_week_header(start_date.wday), rows]
+  end
+
+  private
+
+  def self.get_start_date(race_date, doc)
+    num_weeks = 0
+
+    doc.xpath('//table/tbody/tr').each_with_index do |row, i|
+      next if i == 0 # skip headers
+
+      num_weeks += 1
+    end
+
+    num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
+
+    race_date - num_training_days
   end
 end
