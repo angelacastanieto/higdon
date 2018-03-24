@@ -50,7 +50,7 @@
       <span class="navbar-brand mb-0 h1"><a href="/">Export a Hal Higdon plan</a></span>
     </nav>
     <div class="row"  style="margin-top:2%">
-      <div class="col-sm-5 text-center" >
+      <div class="col-sm-5 text-center" style="overflow-y:scroll;height:1200px;">
         <% details.each do |plan_name, detail| %>
           <div  style="margin: 5% 15% 5% 15%" class="btn-group" role="group" aria-label="Button group with nested dropdown">
             <a class="btn btn-primary" href=<%="/"+plan_name%>><%= detail['table_title']%></a>
