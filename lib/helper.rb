@@ -13,11 +13,21 @@ class Helper
     6 => ["Week starting", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"]
   }
 
+  DEFAULT_PLAN = 'full-novice-1'
+
+  PLAN_URLS = {
+    'full-novice-1' => 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program'
+  }
+
   ALL_DAY_EVENT = true
   START_TIME = ""
   END_TIME = ""
   LOCATION = ""
   DESCRIPTION = ""
+
+  def self.plan_url(plan = DEFAULT_PLAN)
+    PLAN_URLS[plan]
+  end
 
   def self.generate_table_csv(header, rows)
     CSV.generate do |csv_string|
@@ -28,12 +38,12 @@ class Helper
     end
   end
 
-  def self.generate_google_cal_csv(race_date, url)
+  def self.generate_google_cal_csv(racedate, url)
     doc = Nokogiri::HTML(open(url))
 
     CSV.generate do |csv_string|
       csv_string << GOOGLE_CAL_HEADER
-      training_date = get_start_date(race_date, doc)
+      training_date = get_start_date(racedate, doc)
 
       doc.xpath('//table/tbody/tr').each_with_index do |row, i|
         next if i == 0 # skip headers
@@ -47,7 +57,12 @@ class Helper
     end
   end
 
-  def self.get_table_data(url)
+  def self.get_table_data(racedate, url)
+    return get_table_data_by_racedate(racedate, url) if racedate
+    get_original_table_data(url)
+  end
+
+  def self.get_original_table_data(url)
     doc = Nokogiri::HTML(open(url))
 
     rows = []
@@ -65,12 +80,12 @@ class Helper
     [WEEK_HEADER, rows]
   end
 
-  def self.get_table_data_by_racedate(race_date, url)
+  def self.get_table_data_by_racedate(racedate, url)
     doc = Nokogiri::HTML(open(url))
 
     rows = []
 
-    start_date = get_start_date(race_date, doc)
+    start_date = get_start_date(racedate, doc)
 
     training_date = start_date
 
@@ -100,7 +115,7 @@ class Helper
     WEEK_STARTING_HEADERS[weekday_int]
   end
 
-  def self.get_start_date(race_date, doc)
+  def self.get_start_date(racedate, doc)
     num_weeks = 0
 
     doc.xpath('//table/tbody/tr').each_with_index do |row, i|
@@ -111,6 +126,6 @@ class Helper
 
     num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
 
-    race_date - num_training_days
+    racedate - num_training_days
   end
 end
