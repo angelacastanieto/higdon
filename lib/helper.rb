@@ -19,10 +19,6 @@ class Helper
   LOCATION = ""
   DESCRIPTION = ""
 
-  def self.choose_week_header(weekday_int)
-    WEEK_STARTING_HEADERS[weekday_int]
-  end
-
   def self.generate_table_csv(header, rows)
     CSV.generate do |csv_string|
       csv_string << header
@@ -99,6 +95,10 @@ class Helper
   end
 
   private
+
+  def self.choose_week_header(weekday_int)
+    WEEK_STARTING_HEADERS[weekday_int]
+  end
 
   def self.get_start_date(race_date, doc)
     num_weeks = 0
