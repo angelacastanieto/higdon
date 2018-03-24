@@ -13,11 +13,13 @@ class Plan
     6 => ["Week starting", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"]
   }
 
-  DEFAULT_PLAN = 'full-novice-1'
+  DEFAULT_NAME = 'full-novice-1'
 
-  PLAN_URLS = {
-    'full-novice-1' => 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program',
-    'full-novice-2' => 'http://www.halhigdon.com/training/51138/Marathon-Novice-2-Training-Program'
+  DETAILS = {
+    'full-novice-1' => {
+      'url' => 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program',
+      'table_title' => 'Full Novice 1'
+    }
   }
 
   ALL_DAY_EVENT = true
@@ -25,10 +27,6 @@ class Plan
   END_TIME = ""
   LOCATION = ""
   DESCRIPTION = ""
-
-  TABLE_TITLES = {
-    'full-novice-1' => 'Full Novice 1'
-  }
 
   def initialize(plan_name, racedate, calendar)
     @plan_name = plan_name
@@ -52,8 +50,8 @@ class Plan
     @plan_name
   end
 
-  def plan_url(plan = DEFAULT_PLAN)
-    PLAN_URLS[plan]
+  def plan_url(plan = DEFAUL_NAME)
+    DETAILS[plan]['url']
   end
 
   def get_table_data(racedate, plan)
@@ -110,7 +108,7 @@ class Plan
   end
 
   def table_title
-    TABLE_TITLES[@plan_name]
+    DETAILS[@plan_name]['table_title']
   end
 
   def filename
