@@ -26,6 +26,15 @@ class Helper
     return WEEK_HEADER_6 if weekday_int == 6
   end
 
+  def self.generate_table_csv(header, rows)
+    CSV.generate do |csv_string|
+      csv_string << header
+      rows.each do |row|
+        csv_string << row
+      end
+    end
+  end
+
   def self.generate_google_cal_csv(race_date, url)
     doc = Nokogiri::HTML(open(url))
 

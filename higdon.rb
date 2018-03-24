@@ -19,12 +19,7 @@ get '/novice-1' do
 
   headers "Content-Disposition" => "attachment;full-novice-1.csv", "Content-Type" => "application/octet-stream"
 
-  CSV.generate do |csv_string|
-    csv_string << header
-    rows.each do |row|
-      csv_string << row
-    end
-  end
+  Helper.generate_table_csv(header, rows)
 end
 
 
@@ -38,12 +33,7 @@ get '/week/full-novice-1' do
 
   headers "Content-Disposition" => "attachment;marathon-novice-1-week.csv", "Content-Type" => "application/octet-stream"
 
-  CSV.generate do |csv_string|
-    csv_string << header
-    rows.each do |row|
-      csv_string << row
-    end
-  end
+  Helper.generate_table_csv(header, rows)
 end
 
 get '/novice-1-calendar/csv' do
