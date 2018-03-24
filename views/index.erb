@@ -50,26 +50,28 @@
       <span class="navbar-brand mb-0 h1"><a href="/">Export a Hal Higdon plan</a></span>
     </nav>
     <div class="row"  style="margin-top:2%">
-      <div class="col-sm-5 text-center" style="overflow-y:scroll;height:1200px;">
-        <% details.each do |plan_name, detail| %>
-          <div  style="margin: 5% 15% 5% 15%" class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <a class="btn btn-primary" href=<%="/"+plan_name%>><%= detail['table_title']%></a>
-          </div>
-        <% end %>
-      </div>
-      <div class="col-sm-7">
-        <div class="card text-center" style="width: 90%;">
+      <div class="col-sm-12">
+        <div class="card text-center" style="width: 80%;">
           <h3 class="card-header">
             <div class="btn-group float-left" role="group">
               <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                View
+                Choose your grid
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a class="dropdown-item" href=<%="/"+plan%>>Original Grid</a>
                 <a class="dropdown-item" onclick="showRacedateModal()">Grid for Race Date</a>
               </div>
             </div>
-            <span><%= table_title %></span>
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Choose your plan
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <% details.each do |plan_name, detail| %>
+                  <a class="dropdown-item" selected=<%=plan_name==plan%> href=<%="/"+plan_name%>><%= detail['table_title']%></a>
+                <% end %>
+              </div>
+            </div>
             <div class="btn-group float-right" role="group">
               <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Export

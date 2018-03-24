@@ -13,6 +13,8 @@ class Plan
     6 => ["Week starting", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"]
   }
 
+  TRAINING_TABLE_SELECTOR = '//table/tbody/tr'
+
   DEFAULT_NAME = 'full-novice-1'
 
   DETAILS = {
@@ -81,7 +83,7 @@ class Plan
       'table_title' => 'Half Intermediate 2'
     },
     'half-advanced' => {
-      'url' => 'http://www.halhigdon.com/training/51133/Half-Marathon-Advanced-Training-Program ',
+      'url' => 'http://www.halhigdon.com/training/51133/Half-Marathon-Advanced-Training-Program',
       'table_title' => 'Half Advanced'
     },
     'half-hm3' => {
@@ -137,7 +139,7 @@ class Plan
 
     rows = []
 
-    doc.xpath('//table/tbody/tr').each do |row|
+    doc.xpath(TRAINING_TABLE_SELECTOR).each do |row|
       tarray = []
 
       row.xpath('td').each do |cell|
@@ -159,7 +161,7 @@ class Plan
 
     training_date = start_date
 
-    doc.xpath('//table/tbody/tr').each_with_index do |row, i|
+    doc.xpath(TRAINING_TABLE_SELECTOR).each_with_index do |row, i|
       next if i == 0 # skip header
 
       tarray = []
@@ -167,7 +169,7 @@ class Plan
       tarray << training_date.strftime("%m/%d/%Y")
 
       row.xpath('td').each_with_index do |cell, j|
-        next if j == 0 # skip week numberss
+        next if j == 0 # skip week numbers
         tarray << cell.text
       end
 
@@ -212,7 +214,7 @@ class Plan
       csv_string << GOOGLE_CAL_HEADER
       training_date = get_start_date(@racedate, doc)
 
-      doc.xpath('//table/tbody/tr').each_with_index do |row, i|
+      doc.xpath(TRAINING_TABLE_SELECTOR).each_with_index do |row, i|
         next if i == 0 # skip headers
 
         row.xpath('td').each_with_index do |cell, j|
@@ -233,7 +235,7 @@ class Plan
   def get_start_date(racedate, doc)
     num_weeks = 0
 
-    doc.xpath('//table/tbody/tr').each_with_index do |row, i|
+    doc.xpath(TRAINING_TABLE_SELECTOR).each_with_index do |row, i|
       next if i == 0 # skip headers
 
       num_weeks += 1
