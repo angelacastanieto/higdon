@@ -38,7 +38,9 @@ class Helper
     end
   end
 
-  def self.generate_google_cal_csv(racedate, url)
+  def self.generate_google_cal_csv(racedate, plan)
+    url = plan_url(plan)
+
     doc = Nokogiri::HTML(open(url))
 
     CSV.generate do |csv_string|
@@ -57,7 +59,8 @@ class Helper
     end
   end
 
-  def self.get_table_data(racedate, url)
+  def self.get_table_data(racedate, plan)
+    url = plan_url(plan)
     return get_table_data_by_racedate(racedate, url) if racedate
     get_original_table_data(url)
   end

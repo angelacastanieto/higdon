@@ -13,7 +13,7 @@ get '/:plan' do
   plan = params['plan']
   racedate = params['racedate'] && Date.strptime(params['racedate'], '%Y-%m-%d')
 
-  header, rows = Helper.get_table_data(racedate, Helper.plan_url(plan))
+  header, rows = Helper.get_table_data(racedate, plan)
 
   return erb :index, :locals => {week_header: header, :rows => rows, :table_title => 'Marathon Novice 1', :racedate => params['racedate'] || ''} unless csv
 
@@ -28,5 +28,5 @@ get '/:plan/calendar_csv' do
 
   headers "Content-Disposition" => "attachment;full-novice-1-cal-#{racedate}.csv", "Content-Type" => "application/octet-stream"
 
-  Helper.generate_google_cal_csv(racedate, Helper.plan_url(plan))
+  Helper.generate_google_cal_csv(racedate, plan)
 end
