@@ -95,7 +95,7 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <% all_plan_details.each do |plan_name, detail| %>
-                  <a class="dropdown-item" active=<%=plan_name==plan%> href=<%="/"+plan_name%>><%= detail['table_title']%></a>
+                  <a class="dropdown-item" active=<%=plan_name==plan%> href="/<%=plan_name+'?racedate='+racedate+'&grid_type='+grid_type%>"><%= detail['table_title']%></a>
                 <% end %>
               </div>
             </div>
