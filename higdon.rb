@@ -6,7 +6,7 @@ require './lib/plan'
 # TODO: add separate race date set, and reset, so not always prompted for race date (only prompt if dont already have race date)
 
 get '/' do
-  redirect "/#{Plan::DEFAULT_NAME}"
+  redirect "/#{Plan::DEFAULT_NAME}?grid_type=original"
 end
 
 get '/:plan' do
@@ -16,7 +16,7 @@ get '/:plan' do
   csv = params['csv']
   racedate = params['racedate'] && !params['racedate'].empty? && Date.strptime(params['racedate'], '%Y-%m-%d')
   calendar = params['calendar']
-  grid_type = params['grid_type'] || ''
+  grid_type = params['grid_type']
 
   plan = Plan.new(plan_name, racedate, calendar, grid_type)
 

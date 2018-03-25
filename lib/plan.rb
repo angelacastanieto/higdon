@@ -76,7 +76,7 @@ class Plan
     end.to_h
   end
 
-  def initialize(plan_name, racedate, calendar, grid_type)
+  def initialize(plan_name, racedate, calendar, grid_type = 'original')
     @plan_name = plan_name
     @racedate = racedate
     @calendar = calendar
@@ -180,8 +180,8 @@ class Plan
   end
 
   def filename
-    return "#{@plan_name}-cal-#{@racedate}" if @racedate && @calendar
-    return "#{@plan_name}-#{@racedate}" if @racedate
+    return "#{@plan_name}-cal-#{@racedate}" if @grid_type=='racedate' && @calendar
+    return "#{@plan_name}-#{@racedate}" if @grid_type=='racedate'
     @plan_name
   end
 
