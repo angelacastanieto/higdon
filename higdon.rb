@@ -4,9 +4,7 @@ require 'nokogiri'
 require 'csv'
 require './lib/plan'
 # TODO:
-# move view button to table
-# move table title to nav bar on rigth?
-# add download by url instead
+# add download by url in addition
 # add separate race date set, and reset, so not always prompted for race date (only prompt if dont already have race date)
 
 get '/' do

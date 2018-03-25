@@ -13,7 +13,7 @@ class Plan
     6 => ["Week starting", "Sat", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri"]
   }
 
-  TRAINING_TABLE_SELECTOR = '//table/tbody/tr'
+  TABLE_SELECTOR = '//table/tbody/tr'
 
   DEFAULT_NAME = 'full-novice-1'
 
@@ -139,13 +139,14 @@ class Plan
 
     rows = []
 
-    doc.xpath(TRAINING_TABLE_SELECTOR).each do |row|
+    doc.xpath(TABLE_SELECTOR).each do |row|
       tarray = []
-
-      row.xpath('td').each do |cell|
-        tarray << cell.text
+      catch :invalidrow do
+        row.xpath('td').each_with_index do |cell, i|
+          throw :invalidrow if i == 0 && !cell.text.is_i? # row does not begin with week number
+          tarray << cell.text
+        end
       end
-
       rows << tarray
     end
 
@@ -161,7 +162,7 @@ class Plan
 
     training_date = start_date
 
-    doc.xpath(TRAINING_TABLE_SELECTOR).each_with_index do |row, i|
+    doc.xpath(TABLE_SELECTOR).each_with_index do |row, i|
       next if i == 0 # skip header
 
       tarray = []
@@ -214,7 +215,7 @@ class Plan
       csv_string << GOOGLE_CAL_HEADER
       training_date = get_start_date(@racedate, doc)
 
-      doc.xpath(TRAINING_TABLE_SELECTOR).each_with_index do |row, i|
+      doc.xpath(TABLE_SELECTOR).each_with_index do |row, i|
         next if i == 0 # skip headers
 
         row.xpath('td').each_with_index do |cell, j|
@@ -235,7 +236,7 @@ class Plan
   def get_start_date(racedate, doc)
     num_weeks = 0
 
-    doc.xpath(TRAINING_TABLE_SELECTOR).each_with_index do |row, i|
+    doc.xpath(TABLE_SELECTOR).each_with_index do |row, i|
       next if i == 0 # skip headers
 
       num_weeks += 1
@@ -244,5 +245,11 @@ class Plan
     num_training_days = (num_weeks) * 7 - 1 # mult by num days in week, off by one because of raceday
 
     racedate - num_training_days
+  end
+end
+
+class String
+  def is_i?
+    self.to_i.to_s == self
   end
 end
