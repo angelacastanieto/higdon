@@ -8,12 +8,14 @@ require './lib/plan'
 # add separate race date set, and reset, so not always prompted for race date (only prompt if dont already have race date)
 # stop determining table titles myself and use ones already in URL - perhaps dont need to determine plan names either
 get '/' do
-  redirect '/full-novice-1'
+  redirect "/#{Plan::DEFAULT_NAME}"
 end
 
 get '/:plan' do
-  csv = params['csv']
+  halt 404 unless valid_params?(params)
+
   plan_name = params['plan']
+  csv = params['csv']
   racedate = params['racedate'] && Date.strptime(params['racedate'], '%Y-%m-%d')
   calendar = params['calendar']
 
@@ -25,10 +27,17 @@ get '/:plan' do
     :table_title => plan.table_title,
     :racedate => params['racedate'] || '',
     :plan => plan.plan_name,
-    :details => Plan::DETAILS
+    :all_plan_details => Plan.all_plan_details
   } unless csv
 
   headers "Content-Disposition" => "attachment;#{plan.filename}.csv", "Content-Type" => "application/octet-stream"
 
   plan.generate_csv
+end
+
+def valid_params?(params)
+  Plan.all_plan_details.keys.each do |plan|
+    return true if params['plan'] == plan
+  end
+  false
 end

@@ -15,92 +15,66 @@ class Plan
 
   TABLE_SELECTOR = '//table/tbody/tr'
 
-  DEFAULT_NAME = 'full-novice-1'
+  DEFAULT_NAME = 'marathon_novice_1_training_program'
 
-  DETAILS = {
-    'full-novice-1' => {
-      'url' => 'http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program',
-      'table_title' => 'Full Novice 1'
-    },
-    'full-novice-2' => {
-      'url' => 'http://www.halhigdon.com/training/51138/Marathon-Novice-2-Training-Program',
-      'table_title' => 'Full Novice 2'
-    },
-    'full-intermediate-1' => {
-      'url' => 'http://www.halhigdon.com/training/51139/Marathon-Intermediate-1-Training-Program',
-      'table_title' => 'Full Intermediate 1'
-    },
-    'full-intermediate-2' => {
-      'url' => 'http://www.halhigdon.com/training/51140/Marathon-Intermediate-2-Training-Program',
-      'table_title' => 'Full Intermediate 2'
-    },
-    'full-advanced-1' => {
-      'url' => 'http://www.halhigdon.com/training/51141/Marathon-Advanced-1-Training-Program',
-      'table_title' => 'Full Advanced 1'
-    },
-    'full-advanced-2' => {
-      'url' => 'http://www.halhigdon.com/training/51142/Marathon-Advanced-2-Training-Program',
-      'table_title' => 'Full Advanced 2'
-    },
-    'full-personalbest' => {
-      'url' => 'http://www.halhigdon.com/training/51150/Marathon-Personal-Best-Training-Program',
-      'table_title' => 'Full Personal Best'
-    },
-    'full-marathon-3' => {
-      'url' => 'http://www.halhigdon.com/training/51151/Marathon-Marathon-3-Training-Program',
-      'table_title' => 'Full Marathon 3'
-    },
-    'full-senior' => {
-      'url' => 'http://www.halhigdon.com/training/51231/Marathon-Senior-Training-Program',
-      'table_title' => 'Full Senior'
-    },
-    'full-ultra-50' => {
-      'url' => 'http://halhigdon.com/training/67146/Ultramarathon-50-K',
-      'table_title' => 'Full Ultra 50K'
-    },
-    'full-boston' => {
-      'url' => 'http://halhigdon.com/training/51230/Marathon-Boston-Bound-Training-Program',
-      'table_title' => 'Full Boston Bound'
-    },
-    'full-dopey' => {
-      'url' => 'http://www.halhigdon.com/writing/57107/Dopey%20Challenge%20Training%20Guide',
-      'table_title' => 'Full Dopey Challenge'
-    },
-    'half-novice-1' => {
-      'url' => 'http://www.halhigdon.com/training/51131/Half-Marathon-Novice-1-Training-Program',
-      'table_title' => 'Half Novice 1'
-    },
-    'half-novice-2' => {
-      'url' => 'http://www.halhigdon.com/training/51312/Half-Marathon-Novice-2-Training-Program',
-      'table_title' => 'Half Novice 2'
-    },
-    'half-interm-1' => {
-      'url' => 'http://www.halhigdon.com/training/64474/Half-Marathon-Walk-Training-Program-Intermediate-1',
-      'table_title' => 'Half Intermediate 1'
-    },
-    'half-interm-2' => {
-      'url' => 'http://www.halhigdon.com/training/64471/Half-Marathon-Walk-Training-Program-Intermediate-2',
-      'table_title' => 'Half Intermediate 2'
-    },
-    'half-advanced' => {
-      'url' => 'http://www.halhigdon.com/training/51133/Half-Marathon-Advanced-Training-Program',
-      'table_title' => 'Half Advanced'
-    },
-    'half-hm3' => {
-      'url' => 'http://www.halhigdon.com/training/64492/Half-Marathon-Walk-Training-Program-HM3',
-      'table_title' => 'Half HM3'
-    },
-    'half-walk' => {
-      'url' => 'http://www.halhigdon.com/training/51134/Half-Marathon-Walk-Training-Program',
-      'table_title' => 'Half Walk'
-    }
-  }
+  URLS = %w(
+    http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program
+    http://www.halhigdon.com/training/51138/Marathon-Novice-2-Training-Program
+    http://www.halhigdon.com/training/51139/Marathon-Intermediate-1-Training-Program
+    http://www.halhigdon.com/training/51140/Marathon-Intermediate-2-Training-Program
+    http://www.halhigdon.com/training/51141/Marathon-Advanced-1-Training-Program
+    http://www.halhigdon.com/training/51142/Marathon-Advanced-2-Training-Program
+    http://www.halhigdon.com/training/51150/Marathon-Personal-Best-Training-Program
+    http://www.halhigdon.com/training/51151/Marathon-Marathon-3-Training-Program
+    http://www.halhigdon.com/training/51231/Marathon-Senior-Training-Program
+    http://halhigdon.com/training/67146/Ultramarathon-50-K
+    http://halhigdon.com/training/51230/Marathon-Boston-Bound-Training-Program
+    http://www.halhigdon.com/writing/57107/Dopey%20Challenge%20Training%20Guide
+    http://www.halhigdon.com/training/51131/Half-Marathon-Novice-1-Training-Program
+    http://www.halhigdon.com/training/51312/Half-Marathon-Novice-2-Training-Program
+    http://www.halhigdon.com/training/64474/Half-Marathon-Walk-Training-Program-Intermediate-1
+    http://www.halhigdon.com/training/64471/Half-Marathon-Walk-Training-Program-Intermediate-2
+    http://www.halhigdon.com/training/51133/Half-Marathon-Advanced-Training-Program
+    http://www.halhigdon.com/training/64492/Half-Marathon-Walk-Training-Program-HM3
+    http://www.halhigdon.com/training/51134/Half-Marathon-Walk-Training-Program
+    http://www.halhigdon.com/training/50933/5K-Novice-Training-Program
+    http://www.halhigdon.com/training/50934/5K-Intermediate-Training-Program
+    http://www.halhigdon.com/training/50935/5K-Advanced-Training-Program
+    http://www.halhigdon.com/training/50936/5K-Walk-Training-Program
+    http://www.halhigdon.com/training/51096/8K-Novice-Training-Program
+    http://www.halhigdon.com/training/51097/8K-Intermediate-Training-Program
+    http://www.halhigdon.com/training/51098/8K-Advanced-Training-Program
+    http://www.halhigdon.com/training/51122/10K-Novice-Training-Program
+    http://www.halhigdon.com/training/51123/10K-Intermediate-Training-Program
+    http://www.halhigdon.com/training/51124/10K-Advanced-Training-Program
+    http://www.halhigdon.com/training/51125/10K-Walk-Training-Program
+    http://www.halhigdon.com/training/51127/15K-10-mile-Novice-Training-Program
+    http://www.halhigdon.com/training/51128/15K-10-mile-Intermediate-Training-Program
+    http://www.halhigdon.com/training/51129/15K-10-mile-Advanced-Training-Program
+    http://www.halhigdon.com/training/51127/15K-10-mile-Novice-Training-Program
+    http://www.halhigdon.com/training/51128/15K-10-mile-Intermediate-Training-Program
+    http://www.halhigdon.com/training/51129/15K-10-mile-Advanced-Training-Program
+  )
 
   ALL_DAY_EVENT = true
   START_TIME = ""
   END_TIME = ""
   LOCATION = ""
   DESCRIPTION = ""
+
+  def self.all_plan_details
+    URLS.map do |url|
+      plan = url.split('/').last
+
+      [
+        plan.gsub('-', '_').gsub('%20', '_').downcase,
+        {
+          'url' => url,
+          'table_title' => plan.gsub('-', ' ').gsub('%20', ' ')
+        }
+      ]
+    end.to_h
+  end
 
   def initialize(plan_name, racedate, calendar)
     @plan_name = plan_name
@@ -110,6 +84,20 @@ class Plan
     header, rows = get_table_data(racedate, plan_name)
     @header = header
     @rows = rows
+  end
+
+  def all_plan_details
+    @details ||= URLS.map do |url|
+      plan = url.split('/').last
+
+      [
+        plan.gsub('-', '_').gsub('%20', '_').downcase,
+        {
+          'url' => url,
+          'table_title' => plan.gsub('-', ' ').gsub('%20', ' ')
+        }
+      ]
+    end.to_h
   end
 
   def header
@@ -124,8 +112,8 @@ class Plan
     @plan_name
   end
 
-  def plan_url(plan = DEFAUL_NAME)
-    DETAILS[plan]['url']
+  def plan_url(plan = DEFAULT_NAME)
+    all_plan_details[plan]['url']
   end
 
   def get_table_data(racedate, plan)
@@ -183,7 +171,7 @@ class Plan
   end
 
   def table_title
-    DETAILS[@plan_name]['table_title']
+    all_plan_details[@plan_name]['table_title']
   end
 
   def filename
