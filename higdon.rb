@@ -2,11 +2,17 @@ require 'sinatra'
 require 'open-uri'
 require 'nokogiri'
 require 'csv'
+require 'json'
+
 require './lib/plan'
-# TODO: add separate race date set, and reset, so not always prompted for race date (only prompt if dont already have race date)
 
 get '/' do
   redirect "/#{Plan::DEFAULT_NAME}?grid_type=original"
+end
+
+get '/:plan/calendar' do
+  content_type :json
+  { :key1 => 'value1', :key2 => 'value2' }.to_json
 end
 
 get '/:plan' do

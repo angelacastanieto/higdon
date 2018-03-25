@@ -6,10 +6,27 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css'/>
+    https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css
+    <script src='http://fullcalendar.io/js/fullcalendar-3.9.0/lib/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js'></script>
     <script>
+    $(function() {
+        $('#calendar').fullCalendar({
+          events: [
+            {
+                 title  : 'event1',
+                 start  : '2018-03-28'
+               }
+          ]
+        });
+      });
+
       $(function() {
         $('.racedate-form').submit(function() {
           $('#racedate-modal').modal('hide');
+          $('#calendar').fullCalendar('render');
         });
       });
 
@@ -23,6 +40,21 @@
             $('#racedate-modal').modal('show');
           } else {
             window.location.replace('/'+plan+'?grid_type=racedate&racedate='+racedate);
+          }
+        });
+      });
+
+      $(function() {
+        $('#calendar-toggle-btn').click(function() {
+          var racedate = $(this).data('racedate');
+          var plan = $(this).data('plan');
+          var grid_type = $(this).data('grid_type');
+          if (!racedate) {
+            $('#racedate-modal-gridtype').val("calendar");
+            $('#racedate-modal').modal('show');
+          } else {
+            window.location.replace('/'+plan+'?grid_type=calendar&racedate='+racedate);
+            $('#calendar').fullCalendar('render');
           }
         });
       });
@@ -44,7 +76,16 @@
   </head>
   <body class='container-fluid'>
     <style>
-      #googlecal-link, #edit-racedate-btn {
+      #edit-racedate-btn {
+        color: #17a2b8 !important;
+        font-size: .75em;
+        margin-left:-5%;
+      }
+      #racedate-label {
+        color: #868e96;
+        font-size: .75em;
+      }
+      #googlecal-link {
         color: #17a2b8 !important;
       }
       #github {
@@ -84,22 +125,23 @@
         <div class="card text-center" style="width: 100%;">
           <h5 class="card-header">
             <div class="row">
-              <div class="col-sm-2">
-                <div class="btn-group float-left" style="margin-right:.5%" role="group">
-                  <a class="btn btn-secondary <%= grid_type == 'original' ? 'active' : '' %>" role="button" href="/<%=plan+'?grid_type=original&racedate='+racedate%>">Original Grid</a>
-                  <button id="racedate-toggle-btn" data-plan="<%= plan %>" data-racedate="<%= racedate %>" class="btn btn-secondary <%= grid_type == 'racedate' ? 'active' : '' %>">For Race Date</button>
+              <div class="col-sm-3">
+                <div class="btn-group float-left" role="group">
+                  <a class="btn btn-secondary <%= grid_type == 'original' ? 'active' : '' %>" role="button" href="/<%=plan+'?grid_type=original&racedate='+racedate%>">Original</a>
+                  <button id="racedate-toggle-btn" data-plan="<%= plan %>" data-racedate="<%= racedate %>" class="btn btn-secondary <%= grid_type == 'racedate' ? 'active' : '' %>">Week by date</button>
+                  <button id="calendar-toggle-btn" data-plan="<%= plan %>" data-racedate="<%= racedate %>" class="btn btn-secondary <%= grid_type == 'calendar' ? 'active' : '' %>">Calendar</button>
                 </div>
               </div>
               <div class="col-sm-2">
                 <% if racedate != '' %>
-                  <span class="float-sm-left">
-                    <%= racedate %>
-                    <button type="button" id="edit-racedate-btn" data-grid_type="<%= grid_type %>" style="margin-bottom:1%;" class="btn btn-link">Edit</button>
+                  <span style="margin-left:-50%" class="float-sm-left">
+                    <span id="racedate-label">race date: </span><%= racedate %>
+                    <button type="button" id="edit-racedate-btn" data-grid_type="<%= grid_type %>" class="btn btn-link">Edit</button>
                   </span>
                 <% end %>
               </div>
-              <div class="col-sm-4">
-                <div class="btn-group" role="group">
+              <div class="col-sm-3">
+                <div class="btn-group" style="margin-left:-25%" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <%= table_title %>
                   </button>
@@ -132,6 +174,9 @@
               </div>
             </div>
           </h5>
+          <div class="card-body">
+            <div id="calendar" style="min-height:"500px";background-color:#2A92CA;"/>
+          </div>
           <div class="card-body">
             <table class="table table-striped">
               <thead class="thead-dark">
