@@ -29,7 +29,8 @@
 
       $(function() {
         $('#edit-racedate-btn').click(function() {
-          $('#racedate-modal-gridtype').val("original");
+          var grid_type = $(this).data('grid_type');
+          $('#racedate-modal-gridtype').val(grid_type);
           $('#racedate-modal').modal('show');
         });
       });
@@ -93,7 +94,7 @@
                 <% if racedate != '' %>
                   <span class="float-sm-left">
                     <%= racedate %>
-                    <button type="button" id="edit-racedate-btn" style="margin-bottom:1%;" class="btn btn-link">Edit</button>
+                    <button type="button" id="edit-racedate-btn" data-grid_type="<%= grid_type %>" style="margin-bottom:1%;" class="btn btn-link">Edit</button>
                   </span>
                 <% end %>
               </div>
