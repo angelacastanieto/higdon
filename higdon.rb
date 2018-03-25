@@ -6,7 +6,7 @@ require './lib/plan'
 # TODO:
 # add download by url in addition
 # add separate race date set, and reset, so not always prompted for race date (only prompt if dont already have race date)
-
+# stop determining table titles myself and use ones already in URL - perhaps dont need to determine plan names either
 get '/' do
   redirect '/full-novice-1'
 end
