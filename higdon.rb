@@ -11,8 +11,18 @@ get '/' do
 end
 
 get '/:plan/calendar' do
+  halt 404 unless valid_params?(params)
+
+  plan_name = params['plan']
+  csv = params['csv']
+  racedate = params['racedate'] && !params['racedate'].empty? && Date.strptime(params['racedate'], '%Y-%m-%d')
+  calendar = params['calendar']
+  grid_type = params['grid_type']
+
+  plan = Plan.new(plan_name, racedate, calendar, grid_type)
+
   content_type :json
-  { :key1 => 'value1', :key2 => 'value2' }.to_json
+  plan.calendar_events.to_json
 end
 
 get '/:plan' do

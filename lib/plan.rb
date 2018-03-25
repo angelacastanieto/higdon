@@ -175,6 +175,34 @@ class Plan
     [choose_week_header(start_date.wday), rows]
   end
 
+  def calendar_events
+    url = plan_url(@plan_name)
+
+    doc = Nokogiri::HTML(open(url))
+
+    rows = []
+
+    start_date = get_start_date(@racedate, doc)
+
+    training_date = start_date
+    events = []
+
+    doc.xpath(TABLE_SELECTOR).each_with_index do |row, i|
+      next if i == 0 # skip header
+
+      catch :invalidrow do
+        row.xpath('td').each_with_index do |cell, j|
+          throw :invalidrow if j == 0 && !cell.text.is_i? # row does not begin with week number
+          next if j == 0 # skip week numbers
+          events << { 'title'  => cell.text, 'start'  => training_date.strftime("%m/%d/%Y") }
+          training_date += 1
+        end
+      end
+    end
+
+    events
+  end
+
   def table_title
     all_plan_details[@plan_name]['table_title']
   end
