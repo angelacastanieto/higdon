@@ -156,11 +156,15 @@ class Plan
 
       tarray = []
 
-      tarray << training_date.strftime("%m/%d/%Y")
-
-      row.xpath('td').each_with_index do |cell, j|
-        next if j == 0 # skip week numbers
-        tarray << cell.text
+      catch :invalidrow do
+        row.xpath('td').each_with_index do |cell, j|
+          throw :invalidrow if j == 0 && !cell.text.is_i? # row does not begin with week number
+          if j == 0 # add training date in place of week numbers
+            tarray << training_date.strftime("%m/%d/%Y")
+            next
+          end
+          tarray << cell.text
+        end
       end
 
       training_date += 7 unless tarray.empty? # if is empty, was header row so don't increment training_date
