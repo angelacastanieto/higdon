@@ -13,9 +13,17 @@
         });
       });
 
-      function showRacedateModal() {
-        $('#racedate-modal').modal('show');
-      }
+      $(function() {
+        $('#racedate-toggle-btn').click(function() {
+          var racedate = $(this).data('racedate');
+          var plan = $(this).data('plan');
+          if (!racedate) {
+            $('#racedate-modal').modal('show');
+          } else {
+            window.location.replace('/'+plan+'?grid_type=racedate&racedate='+racedate);
+          }
+        });
+      });
 
       function showgooglecallink() {
         $('#googlecal-link').show();
@@ -47,6 +55,7 @@
             <form class="racedate-form" method="GET" action=<%"/"+plan%>>
               <div class="form-group">
                 <input type="date" name="racedate" required>
+                <input type="text" name="grid_type" value="racedate" hidden>
                 <button type="submit" class="btn btn-info">Submit</button>
               </div>
           </form>
@@ -77,8 +86,8 @@
         <div class="card text-center" style="width: 100%;">
           <h3 class="card-header">
             <div class="btn-group float-left" role="group">
-              <a class="btn btn-secondary <%= racedate == '' ? 'active' : '' %>" role="button" href=<%="/"+plan%>>Original Grid</a>
-              <button class="btn btn-secondary <%= racedate != '' ? 'active' : '' %>" onclick="showRacedateModal()">For Race Date</button>
+              <a class="btn btn-secondary <%= grid_type == '' ? 'active' : '' %>" role="button" href="/<%=plan+'?racedate='+racedate%>">Original Grid</a>
+              <button id="racedate-toggle-btn" data-plan="<%= plan %>" data-racedate="<%= racedate %>" class="btn btn-secondary <%= grid_type == 'racedate' ? 'active' : '' %>">For Race Date</button>
             </div>
             <div class="btn-group" role="group">
               <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -99,7 +108,7 @@
                 <a class="dropdown-item" href=<%="/"+plan+"?csv=true&racedate="+racedate%>>CSV</a>
                 <a class="dropdown-item" onclick="showgooglecallink()" href=<%="/"+plan+"?csv=true&calendar=true&racedate="+racedate%>>Google calendar-importable CSV</a>
                 <% else %>
-                <a class="dropdown-item" href=<%="/"+plan+"?csv=true"%>>Export as CSV</a>
+                <a class="dropdown-item" href=<%="/"+plan+"?csv=true"%>>CSV</a>
                 <% end %>
               </div>
             </div>

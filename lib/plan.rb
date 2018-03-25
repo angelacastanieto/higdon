@@ -76,10 +76,11 @@ class Plan
     end.to_h
   end
 
-  def initialize(plan_name, racedate, calendar)
+  def initialize(plan_name, racedate, calendar, grid_type)
     @plan_name = plan_name
     @racedate = racedate
     @calendar = calendar
+    @grid_type = grid_type
 
     header, rows = get_table_data(racedate, plan_name)
     @header = header
@@ -118,7 +119,7 @@ class Plan
 
   def get_table_data(racedate, plan)
     url = plan_url(plan)
-    return get_table_data_by_racedate(racedate, url) if racedate
+    return get_table_data_by_racedate(racedate, url) if @grid_type == 'racedate'
     get_original_table_data(url)
   end
 

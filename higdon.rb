@@ -16,10 +16,11 @@ get '/:plan' do
 
   plan_name = params['plan']
   csv = params['csv']
-  racedate = params['racedate'] && Date.strptime(params['racedate'], '%Y-%m-%d')
+  racedate = params['racedate'] && !params['racedate'].empty? && Date.strptime(params['racedate'], '%Y-%m-%d')
   calendar = params['calendar']
+  grid_type = params['grid_type'] || ''
 
-  plan = Plan.new(plan_name, racedate, calendar)
+  plan = Plan.new(plan_name, racedate, calendar, grid_type)
 
   return erb :index, :locals => {
     :week_header => plan.header,
@@ -27,6 +28,7 @@ get '/:plan' do
     :table_title => plan.table_title,
     :racedate => params['racedate'] || '',
     :plan => plan.plan_name,
+    :grid_type => grid_type,
     :all_plan_details => Plan.all_plan_details
   } unless csv
 
