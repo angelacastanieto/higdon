@@ -6,6 +6,7 @@ require 'json'
 require './lib/plan'
 
 # TODO:  implement multiple-month printing
+# TODO:  move downloaded js and css into better place
 
 get '/' do
   redirect "/#{Plan::DEFAULT_NAME}?grid_type=original"
