@@ -3,8 +3,9 @@ require 'open-uri'
 require 'nokogiri'
 require 'csv'
 require 'json'
-
 require './lib/plan'
+
+# TODO:  implement multiple-month printing
 
 get '/' do
   redirect "/#{Plan::DEFAULT_NAME}?grid_type=original"
@@ -33,7 +34,6 @@ get '/:plan' do
   racedate = params['racedate'] && !params['racedate'].empty? && Date.strptime(params['racedate'], '%Y-%m-%d')
   calendar = params['calendar']
   grid_type = params['grid_type']
-
   plan = Plan.new(plan_name, racedate, calendar, grid_type)
 
   return erb :index, :locals => {
