@@ -8,6 +8,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css'/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css " rel="stylesheet" type="text/css" media="print" />
+
     <script src='https://fullcalendar.io/js/fullcalendar-3.9.0/lib/moment.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js'></script>
     <script>
@@ -15,7 +17,7 @@
       var results = new RegExp('[\?&]' + name + '=([^&#]*)')
                         .exec(window.location.href);
 
-      return results[1] || 0;
+      return results && results[1] || 0;
     }
 
     $(function() {
@@ -155,14 +157,13 @@
                 </div>
               </div>
               <div class="col-sm-4">
-                <div class="btn-group float-right" role="group">
+                <div class="dropdown float-right" role="group">
                   <span style="font-size:.75em;">
                     <a id="googlecal-link" style="display:none" target="_blank" href="https://support.google.com/calendar/answer/37118?hl=en">
                       How to upload to Google Calendar
                     </a>
                   </span>
-                  <button style="margin-left:.5%" id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Export
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                    Export
                   </button>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
                     <% if grid_type == 'racedate' %>
