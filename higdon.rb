@@ -7,7 +7,7 @@ require './lib/plan'
 
 # TODO:  implement multiple-month printing
 # TODO:  move downloaded js and css into better place
-
+# TODO:  bugfix - why doesnt plan update when switch plan in calendar mode
 get '/' do
   redirect "/#{Plan::DEFAULT_NAME}?grid_type=original"
 end
