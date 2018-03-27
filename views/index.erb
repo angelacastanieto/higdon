@@ -16,18 +16,33 @@
     <script src='moment.js'></script>
     <script src='fullcalendar.js'></script>
     <script>
-    $.urlParam = function (name) {
-      var results = new RegExp('[\?&]' + name + '=([^&#]*)')
-                        .exec(window.location.href);
+      $.urlParam = function (name) {
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+                          .exec(window.location.href);
 
-      return results && results[1] || 0;
-    }
+        return results && results[1] || 0;
+      }
 
-    $(function() {
+      $(function() {
         $('#calendar').fullCalendar({
           allDayDefault: true,
           events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
         });
+
+        var monthsToPrint = $.urlParam('print_months');
+        if (monthsToPrint !== 0) {
+          var months = monthsToPrint.split(',');
+          console.log(months);
+          for (var i = 0; i < months.length; i++) {
+            $('#calendar-base').append('<div id="calendar-'+i+'" />');
+            $('#calendar-'+i).fullCalendar({
+              defaultDate: months[i],
+              dateAlignment: "month",
+              allDayDefault: true,
+              events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
+            });
+          }
+        }
       });
 
       $(function() {
@@ -205,6 +220,7 @@
           <div class="card-body" id="section-to-print">
             <% if grid_type == 'calendar' %>
               <div id="calendar" data-plan="<%= plan %>" data-racedate="<%= racedate %>"/>
+              <div id="calendar-base"/>
             <% else %>
               <table class="table table-striped">
                 <thead class="thead-dark">
