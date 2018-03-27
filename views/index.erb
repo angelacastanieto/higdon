@@ -28,21 +28,6 @@
           allDayDefault: true,
           events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
         });
-
-        var monthsToPrint = $.urlParam('print_months');
-        if (monthsToPrint !== 0) {
-          var months = monthsToPrint.split(',');
-          console.log(months);
-          for (var i = 0; i < months.length; i++) {
-            $('#calendar-base').append('<div id="calendar-'+i+'" />');
-            $('#calendar-'+i).fullCalendar({
-              defaultDate: months[i],
-              dateAlignment: "month",
-              allDayDefault: true,
-              events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
-            });
-          }
-        }
       });
 
       $(function() {
@@ -90,8 +75,46 @@
       });
 
       $(function() {
-        $('.printBtn').on('click', function (){
-           window.print();
+        $('#printBtn').on('click', function (){
+          alert('Please wait - getting entire calendar to print');// jank - make nicer
+          $("#calendar-base").css("visibility", "visible");
+
+          var startdateString = $(this).data('startdate');
+          var racedateString = $(this).data('racedate');
+          var startdate = moment(startdateString);
+          var racedate = moment(racedateString);
+
+          var endOfMonth = startdate.add(1, 'months').endOf('month'); // start at second month
+          var i = 0;
+          while (endOfMonth <= racedate) {
+            console.log(endOfMonth, racedate)
+            i++; // ok to start loop at i === 1
+
+            $('#calendar-base').append('<div id="calendar-'+i+'" />');
+            $('#calendar-'+i).fullCalendar({
+              defaultDate: endOfMonth.format('MM DD YYYY'),
+              dateAlignment: "month",
+              allDayDefault: true,
+              events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
+            });
+
+            endOfMonth = startdate.add(1, 'months').endOf('month');
+
+            if (endOfMonth > racedate) {
+              i++;
+
+              $('#calendar-base').append('<div id="calendar-'+i+'" />');
+              $('#calendar-'+i).fullCalendar({
+                defaultDate: endOfMonth.format('MM DD YYYY'),
+                dateAlignment: "month",
+                allDayDefault: true,
+                events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
+              });
+            }
+          }
+
+          setTimeout(function(){ window.print(); }, 5000); // give calendar time to render
+          setTimeout(function(){ $("#calendar-base").css("visibility", "hidden"); }, 5000); // give calendar time to render
          });
       });
 
@@ -105,6 +128,9 @@
   <body class='container-fluid'>
     <style>
       @media print {
+        div{
+           page-break-inside: avoid;
+        }
         body * {
           visibility: hidden;
         }
@@ -212,7 +238,7 @@
                       <a class="dropdown-item" href=<%="/"+plan+"?grid_type="+grid_type+"&csv=true"%>>CSV</a>
                     <% end %>
                   </div>
-                  <button class="printBtn btn btn-secondary hidden-print">Print</button>
+                  <button id="printBtn" data-racedate="<%= racedate %>" data-startdate="<%= startdate %>" class="btn btn-secondary hidden-print">Print</button>
                 </div>
               </div>
             </div>

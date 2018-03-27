@@ -42,6 +42,7 @@ get '/:plan' do
     :rows => plan.rows,
     :table_title => plan.table_title,
     :racedate => params['racedate'] || '',
+    :startdate => plan.start_date_string,
     :plan => plan.plan_name,
     :grid_type => grid_type,
     :all_plan_details => Plan.all_plan_details

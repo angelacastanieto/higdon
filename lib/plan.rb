@@ -81,10 +81,22 @@ class Plan
     @racedate = racedate
     @calendar = calendar
     @grid_type = grid_type
+    @start_date_string = get_start_date_string(racedate, plan_name) # this is kind of jank
 
     header, rows = get_table_data(racedate, plan_name)
     @header = header
     @rows = rows
+  end
+
+  def get_start_date_string(racedate, plan)
+    url = plan_url(plan)
+    doc = Nokogiri::HTML(open(url))
+    start_date = get_start_date(racedate, doc)
+    start_date.strftime("%Y/%m/%d")
+  end
+
+  def start_date_string
+    @start_date_string
   end
 
   def all_plan_details
