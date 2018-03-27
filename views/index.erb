@@ -150,14 +150,14 @@
         <div class="card text-center" style="width: 100%;">
           <h5 class="card-header">
             <div class="row">
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <div class="btn-group float-left" role="group">
                   <a class="btn btn-secondary <%= grid_type == 'original' ? 'active' : '' %>" role="button" href="/<%=plan+'?grid_type=original&racedate='+racedate%>">Original</a>
                   <button id="racedate-toggle-btn" data-plan="<%= plan %>" data-racedate="<%= racedate %>" class="btn btn-secondary <%= grid_type == 'racedate' ? 'active' : '' %>">Week by date</button>
                   <button id="calendar-toggle-btn" data-plan="<%= plan %>" data-racedate="<%= racedate %>" class="btn btn-secondary <%= grid_type == 'calendar' ? 'active' : '' %>">Calendar</button>
                 </div>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-1">
                 <% if racedate != '' %>
                   <span class="float-sm-left">
                     <span id="racedate-label">race date: </span><%= racedate %>
