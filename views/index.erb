@@ -76,32 +76,20 @@
 
       $(function() {
         $('#printBtn').on('click', function (){ // TODO:  fix the fact that it always prints current month first even if its not the first month
-          alert('Please wait - getting entire calendar to print');// TODO: jank - make nicer
-          $("#calendar-base").css("visibility", "visible");
+          if ($.urlParam('grid_type') == 'calendar') {
+            alert('Please wait - getting entire calendar to print');// TODO: jank - make nicer
+            $("#calendar-base").css("visibility", "visible");
 
-          var startdateString = $(this).data('startdate');
-          var racedateString = $(this).data('racedate');
-          var startdate = moment(startdateString);
-          var racedate = moment(racedateString);
+            var startdateString = $(this).data('startdate');
+            var racedateString = $(this).data('racedate');
+            var startdate = moment(startdateString);
+            var racedate = moment(racedateString);
 
-          var endOfMonth = startdate.add(1, 'months').endOf('month'); // start at second month
-          var i = 0;
-          while (endOfMonth <= racedate) {
-            console.log(endOfMonth, racedate)
-            i++; // ok to start loop at i === 1
-
-            $('#calendar-base').append('<div id="calendar-'+i+'" />');
-            $('#calendar-'+i).fullCalendar({
-              defaultDate: endOfMonth.format('MM DD YYYY'),
-              dateAlignment: "month",
-              allDayDefault: true,
-              events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
-            });
-
-            endOfMonth = startdate.add(1, 'months').endOf('month');
-
-            if (endOfMonth > racedate) {
-              i++;
+            var endOfMonth = startdate.add(1, 'months').endOf('month'); // start at second month
+            var i = 0;
+            while (endOfMonth <= racedate) {
+              console.log(endOfMonth, racedate)
+              i++; // ok to start loop at i === 1
 
               $('#calendar-base').append('<div id="calendar-'+i+'" />');
               $('#calendar-'+i).fullCalendar({
@@ -110,11 +98,27 @@
                 allDayDefault: true,
                 events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
               });
-            }
-          }
 
-          setTimeout(function(){ window.print(); }, 5000); // give calendar time to render
-          setTimeout(function(){ $("#calendar-base").css("visibility", "hidden"); }, 5000); // give calendar time to render
+              endOfMonth = startdate.add(1, 'months').endOf('month');
+
+              if (endOfMonth > racedate) {
+                i++;
+
+                $('#calendar-base').append('<div id="calendar-'+i+'" />');
+                $('#calendar-'+i).fullCalendar({
+                  defaultDate: endOfMonth.format('MM DD YYYY'),
+                  dateAlignment: "month",
+                  allDayDefault: true,
+                  events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
+                });
+              }
+            }
+
+            setTimeout(function(){ window.print(); }, 5000); // give calendar time to render
+            setTimeout(function(){ $("#calendar-base").css("visibility", "hidden"); }, 5000); // give calendar time to render
+          } else {
+            window.print();
+          }
          });
       });
 
