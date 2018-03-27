@@ -75,8 +75,8 @@
       });
 
       $(function() {
-        $('#printBtn').on('click', function (){
-          alert('Please wait - getting entire calendar to print');// jank - make nicer
+        $('#printBtn').on('click', function (){ // TODO:  fix the fact that it always prints current month first even if its not the first month
+          alert('Please wait - getting entire calendar to print');// TODO: jank - make nicer
           $("#calendar-base").css("visibility", "visible");
 
           var startdateString = $(this).data('startdate');

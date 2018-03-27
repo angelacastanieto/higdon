@@ -81,7 +81,7 @@ class Plan
     @racedate = racedate
     @calendar = calendar
     @grid_type = grid_type
-    @start_date_string = get_start_date_string(racedate, plan_name) # this is kind of jank
+    @start_date_string = racedate ? get_start_date_string(racedate, plan_name) : '' # this is kind of jank
 
     header, rows = get_table_data(racedate, plan_name)
     @header = header
