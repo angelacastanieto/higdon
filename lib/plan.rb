@@ -15,11 +15,11 @@ class Plan
 
   TABLE_SELECTOR = '//table/tbody/tr'
 
-  DEFAULT_NAME = 'marathon_novice_1_training_program'
+  DEFAULT_NAME = 'novice_1_marathon'
 
   URLS = %w(
-    http://www.halhigdon.com/training/51137/Marathon-Novice-1-Training-Program
-    http://www.halhigdon.com/training/51138/Marathon-Novice-2-Training-Program
+    https://www.halhigdon.com/training-programs/marathon-training/novice-1-marathon
+    https://www.halhigdon.com/training-programs/marathon-training/novice-2-marathon
     http://www.halhigdon.com/training/51139/Marathon-Intermediate-1-Training-Program
     http://www.halhigdon.com/training/51140/Marathon-Intermediate-2-Training-Program
     http://www.halhigdon.com/training/51141/Marathon-Advanced-1-Training-Program
@@ -82,7 +82,6 @@ class Plan
     @calendar = calendar
     @grid_type = grid_type
     @start_date_string = racedate ? get_start_date_string(racedate, plan_name) : '' # this is kind of jank
-
     header, rows = get_table_data(racedate, plan_name)
     @header = header
     @rows = rows

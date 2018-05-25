@@ -26,7 +26,7 @@
       $(function() {
         $('#calendar').fullCalendar({
           allDayDefault: true,
-          events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
+          events: '/marathon_novice_1/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
         });
       });
 
@@ -96,7 +96,7 @@
                 defaultDate: endOfMonth.format('MM DD YYYY'),
                 dateAlignment: "month",
                 allDayDefault: true,
-                events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
+                events: '/marathon_novice_1/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
               });
 
               endOfMonth = startdate.add(1, 'months').endOf('month');
@@ -109,7 +109,7 @@
                   defaultDate: endOfMonth.format('MM DD YYYY'),
                   dateAlignment: "month",
                   allDayDefault: true,
-                  events: '/marathon_novice_1_training_program/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
+                  events: '/marathon_novice_1/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
                 });
               }
             }
