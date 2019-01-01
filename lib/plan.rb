@@ -14,6 +14,7 @@ class Plan
   }
 
   TABLE_SELECTOR = '//table/tbody/tr'
+  CSS_SELECTOR = 'div#miles table tr'
 
   DEFAULT_NAME = 'novice_1_marathon'
 
@@ -139,7 +140,7 @@ class Plan
 
     rows = []
 
-    doc.xpath(TABLE_SELECTOR).each do |row|
+    doc.css(CSS_SELECTOR).each do |row|
       tarray = []
       catch :invalidrow do
         row.xpath('td').each_with_index do |cell, i|
@@ -154,15 +155,14 @@ class Plan
   end
 
   def get_table_data_by_racedate(racedate, url)
-    doc = Nokogiri::HTML(open(url))
 
+    doc = Nokogiri::HTML(open(url))
     rows = []
 
     start_date = get_start_date(racedate, doc)
 
     training_date = start_date
-
-    doc.xpath(TABLE_SELECTOR).each_with_index do |row, i|
+    doc.css(CSS_SELECTOR).each_with_index do |row, i|
       next if i == 0 # skip header
 
       tarray = []
@@ -181,6 +181,11 @@ class Plan
       training_date += 7 unless tarray.empty? # if is empty, was header row so don't increment training_date
 
       rows << tarray
+
+      p tarray
+      if tarray[-1] == 'Marathon'
+        p "DONEDONEDONE"
+      end
     end
 
     [choose_week_header(start_date.wday), rows]
@@ -198,7 +203,7 @@ class Plan
     training_date = start_date
     events = []
 
-    doc.xpath(TABLE_SELECTOR).each_with_index do |row, i|
+    doc.css(CSS_SELECTOR).each_with_index do |row, i|
       next if i == 0 # skip header
 
       catch :invalidrow do
@@ -247,7 +252,7 @@ class Plan
       csv_string << GOOGLE_CAL_HEADER
       training_date = get_start_date(@racedate, doc)
 
-      doc.xpath(TABLE_SELECTOR).each_with_index do |row, i|
+      doc.css(CSS_SELECTOR).each_with_index do |row, i|
         next if i == 0 # skip headers
 
         row.xpath('td').each_with_index do |cell, j|
@@ -268,7 +273,7 @@ class Plan
   def get_start_date(racedate, doc)
     num_weeks = 0
 
-    doc.xpath(TABLE_SELECTOR).each_with_index do |row, i|
+    doc.css(CSS_SELECTOR).each_with_index do |row, i|
       next if i == 0 # skip headers
 
       num_weeks += 1
