@@ -6,3 +6,4 @@ Export Hal Higdon plans to CSV for Google Calendar
 2. `gem install bundler -v '1.17.3'`
 3. `bundle install`
 3. `ruby higdon.rb`
+4. navigate to http://localhost:4567
