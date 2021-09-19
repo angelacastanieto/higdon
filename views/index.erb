@@ -192,25 +192,25 @@
     </nav>
     <div class="row">
       <div class="col-sm-12">
-        <div class="card text-center" style="width: 100%;">
+        <div class="card text-center">
           <h5 class="card-header">
             <div class="row">
-              <div class="col-sm-3 col-md-2">
+              <div class="pl-3">
                 <div class="btn-group float-left" role="group">
                   <a class="btn btn-secondary <%= grid_type == 'original' ? 'active' : '' %>" role="button" href="/<%=plan+'?grid_type=original&racedate='+racedate%>">Original</a>
                   <button id="racedate-toggle-btn" data-plan="<%= plan %>" data-racedate="<%= racedate %>" class="btn btn-secondary <%= grid_type == 'racedate' ? 'active' : '' %>">Week by date</button>
                   <button id="calendar-toggle-btn" data-plan="<%= plan %>" data-racedate="<%= racedate %>" class="btn btn-secondary <%= grid_type == 'calendar' ? 'active' : '' %>">Calendar</button>
                 </div>
               </div>
-              <div class="col-sm-1 col-md-2">
+              <div>
                 <% if racedate != '' %>
-                  <span class="float-sm-left">
+                  <span class="float-sm-left pl-3">
                     <span id="racedate-label">race date: </span><%= racedate %>
                     <button type="button" id="edit-racedate-btn" data-grid_type="<%= grid_type %>" class="btn btn-link">Edit</button>
                   </span>
                 <% end %>
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-3 pl-3">
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <%= table_title %>

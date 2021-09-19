@@ -181,11 +181,6 @@ class Plan
       training_date += 7 unless tarray.empty? # if is empty, was header row so don't increment training_date
 
       rows << tarray
-
-      p tarray
-      if tarray[-1] == 'Marathon'
-        p "DONEDONEDONE"
-      end
     end
 
     [choose_week_header(start_date.wday), rows]

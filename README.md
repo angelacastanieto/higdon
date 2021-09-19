@@ -14,3 +14,8 @@ in project root directory
 4. `ruby higdon.rb`
 
 5. navigate to http://localhost:4567
+
+# troubleshooting
+
+If you get any errors that a certain gem cannot be found, try installing that gem separately
+ie. `gem install sinatra` or `gem install nokogiri`
