@@ -18,4 +18,4 @@ in project root directory
 # troubleshooting
 
 If you get any errors that a certain gem cannot be found, try installing that gem separately
-ie. `gem install sinatra` or `gem install nokogiri`
+ie. `gem install sinatra` or `gem install nokogiri -v 1.12.5`

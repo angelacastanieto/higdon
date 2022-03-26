@@ -26,7 +26,7 @@
       $(function() {
         $('#calendar').fullCalendar({
           allDayDefault: true,
-          events: '/marathon_novice_1/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
+          events: window.location.pathname.slice(1) + '/calendar?racedate='+$.urlParam('racedate')+'&grid_type=calendar'
         });
       });
 
