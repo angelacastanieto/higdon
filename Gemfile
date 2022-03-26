@@ -1,5 +1,5 @@
-ruby "2.5.9"
+ruby ">= 2.6"
 source 'https://rubygems.org'
-gem 'nokogiri'
+gem "nokogiri", ">= 1.13.2"
 gem 'json'
 gem 'sinatra'

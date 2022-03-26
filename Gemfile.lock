@@ -1,22 +1,22 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    json (2.5.1)
-    mini_portile2 (2.6.1)
+    json (2.6.1)
+    mini_portile2 (2.8.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.12.5)
-      mini_portile2 (~> 2.6.1)
+    nokogiri (1.13.3)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    racc (1.5.2)
+    racc (1.6.0)
     rack (2.2.3)
-    rack-protection (2.1.0)
+    rack-protection (2.2.0)
       rack
     ruby2_keywords (0.0.5)
-    sinatra (2.1.0)
+    sinatra (2.2.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
-      rack-protection (= 2.1.0)
+      rack-protection (= 2.2.0)
       tilt (~> 2.0)
     tilt (2.0.10)
 
@@ -25,8 +25,11 @@ PLATFORMS
 
 DEPENDENCIES
   json
-  nokogiri
+  nokogiri (>= 1.13.2)
   sinatra
+
+RUBY VERSION
+   ruby 2.6.6p146
 
 BUNDLED WITH
    1.17.3
