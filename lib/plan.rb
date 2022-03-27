@@ -30,7 +30,6 @@ class Plan
     http://www.halhigdon.com/training/51231/Marathon-Senior-Training-Program
     http://halhigdon.com/training/67146/Ultramarathon-50-K
     http://halhigdon.com/training/51230/Marathon-Boston-Bound-Training-Program
-    http://www.halhigdon.com/writing/57107/Dopey%20Challenge%20Training%20Guide
     http://www.halhigdon.com/training/51131/Half-Marathon-Novice-1-Training-Program
     http://www.halhigdon.com/training/51312/Half-Marathon-Novice-2-Training-Program
     http://www.halhigdon.com/training/64474/Half-Marathon-Walk-Training-Program-Intermediate-1
